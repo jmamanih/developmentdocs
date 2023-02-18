@@ -1,0 +1,160 @@
+{
+  "main": {
+    "id": "f68ab655e804b33d",
+    "type": "split",
+    "children": [
+      {
+        "id": "548a8abc429ca55a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "fc7e6643fff8ab15",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "001_Angular_SPA.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2deb45aa26553cf5",
+    "type": "split",
+    "children": [
+      {
+        "id": "57baa82c33ec7f51",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4365a83633c37b00",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "1167bbe8a62a8c76",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "64a58a38e4ed5673",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "c38d7c17153d3539",
+    "type": "split",
+    "children": [
+      {
+        "id": "7aa3d8479b2b11a2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5bee2b857091d3ad",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "001_Angular_SPA.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "2339f84f7097c926",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "001_Angular_SPA.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "0130969257c7b3ca",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "8cfc9385f09be6f9",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "001_Angular_SPA.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "fc7e6643fff8ab15",
+  "lastOpenFiles": [
+    "006_Angular_Dialog_Component.md",
+    "005_Angular_Material_Layouts.md",
+    "004_Angular_JWT_Auth.md",
+    "003_Angular_Material_Design.md",
+    "002_Angular_MDL.md",
+    "001_Angular_SPA.md",
+    "images/lifecycle_hooks.png",
+    "images/data-binding.png",
+    "images/component.png"
+  ]
+}
