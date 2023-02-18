@@ -748,3 +748,28 @@ ssh-add ~/.ssh/id_rsa
 ```
 
 [![Ir al menú](images/up.jpg) Ir al Inicio](#topmenu "Ir al Menu")
+
+
+### Error 403
+
+Generar un nuevo Token
+
+```sh
+Menu Perfil Github, 
+    Settings,
+    Developer settings
+    Personal Access Token,
+    Tokens (Classic)
+
+    Generate New Token, Generate New Token (Classic)
+
+        Note:  Nombre de Usuario
+        Expiration: No expiration
+        chackbox Repo
+        Generate Token
+
+    Copy Token
+
+    Al subir al repositorio en vez de password copiar el token
+    
+```
