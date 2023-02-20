@@ -25,6 +25,11 @@ MySQL es un sistema de gestión de bases de datos relacional desarrollado bajo l
         brew services restart mysql
         mysql -u root
 
+*Detener servico de MySql*
+
+        brew services stop mysql
+        
+
 <a id="idsec30">
 
 ## Instalación en Linux

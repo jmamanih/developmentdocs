@@ -111,14 +111,14 @@
 * Enlazar un proyecto con valet
 
   cd proyecto
-  valet link
+  valet park
 
   http://proyecto.test
 
 * Eliminar un proyecto de Valet y dejar de servirlo en un dominio .test
 
   cd proyecto
-  valet unlink
+  valet forget
 
 * Detener servicio web en el puerto 80
 

@@ -1,5 +1,5 @@
-# INSTALACION DE SERVIDORES EN CENTOS LINUX 
-
+# INSTALACION DE CENTOS LINUX 
+---
 ## Vi Editor commands
 
 ```
@@ -26,144 +26,173 @@
 ```
 
 ## NETWORK CONFIG
+---
+ConfiguraciÃ³n de Red
 
 ```sh
-Configuración de Red
-	# system-config-network
-	ó	
-	# system-config-network-tui
-	# service network restart		//	ó  /etc/init.d/network restart
 
+su root
+system-config-network
+
+system-config-network-tui
+service network restart		//	ï¿½  /etc/init.d/network restart
+```
 Puertos activos
-	# netstat –l
 
+```
+netstat -l
+```
 Ver asignacion de IPs
-	# ipconfig --all
+	
+```
+ipconfig --all
 ```
 
 Habilitar arranque automatico de interface de red (eth0)
 
 ```
-	# vim /etc/sysconfig/network-scripts/ifcfg-eth0
-
+vim /etc/sysconfig/network-scripts/ifcfg-eth0
+```
+```
 		BOOTPROTO=none
 		DEVICE=eth0
 		IPADDR=192.168.1.10 # your IP address
 		NETMASK=255.255.255.0 # your netmask
 		NETWORK=192.168.1.0 
 		ONBOOT=yes				# <- change for yes
-
-	# chkconfig network on
-	# service network restart
-	# shutdown -r now
+```
+```
+chkconfig network on
+service network restart
+shutdown -r now
 ```
 	
 ## PORTS
-
+---
 ```
-	# netstat -lntu    				// Listado de puertos 
-	# lsof -i TCP| fgrep LISTEN		// Puertos que estan escuchando
+netstat -lntu    				// Listado de puertos 
+lsof -i TCP| fgrep LISTEN		// Puertos que estan escuchando
 ```
 
 ## KILL PROCESS
+---
+
+Remove packageKit bloc yum in Centos 7
 
 ```
-// Remove packageKit bloc yum in Centos 7
-	# sudo kill $(cat /var/run/yum.pid)
+sudo kill $(cat /var/run/yum.pid)
 ```
 
-=======================================================================================
-> INSTALL VMWARETOOLS CENTOS 
-=======================================================================================
-	>> CentOS 6.x 64-bit, vSphere ESXi 5.1
-		# yum -y install http://packages.vmware.com/tools/esx/5.1/repos/vmware-tools-repo-RHEL6-9.0.0-2.x86_64.rpm
+## INSTALL VMWARETOOLS CENTOS 
+---
 
-		vSphere ESXi 5.5
+CentOS 6.x 64-bit, vSphere ESXi 5.1
+```
+yum -y install http://packages.vmware.com/tools/esx/5.1/repos/vmware-tools-repo-RHEL6-9.0.0-2.x86_64.rpm
+```
 
-		# yum -y install http://packages.vmware.com/tools/esx/5.5/repos/vmware-tools-repo-RHEL6-9.4.0-1.el6.x86_64.rpm
+vSphere ESXi 5.5
+```
+yum -y install http://packages.vmware.com/tools/esx/5.5/repos/vmware-tools-repo-RHEL6-9.4.0-1.el6.x86_64.rpm
+```
 
-		Install VMware-Tools
+Install VMware-Tools
 
-		# yum -y install vmware-tools-esx-nox
+```
+yum -y install vmware-tools-esx-nox
+```
 		
-	>> For Centos 6.6
-	1.
-		# yum install make gcc kernel-devel perl kernel-headers glibc-headers -y
-	2. Open vShere Client, open Console, Menu VM, Guest, Install/Upgrade VMWare Tools
-	3. Mount cd in vSphere: VMwareTools, Copy and extract VMwareTools file:
-		# cp /mnt/cdrom/VMwareTools-xxxxxxxx.tar.gz /tmp/
-		# cd /tmp/
-		# tar xvfz VMwareTools-xxxxxxxx.tar.gz
+For Centos 6.6
 
-	4. Install the tools with default settings:
-		# cd /tmp/vmware-tools-distrib
-		# ./vmware-install.pl -d
-		Clean up temporary files in TMP folder:
-		# rm -rf /tmp/*	
+1. Install gcc
+```
+yum install make gcc kernel-devel perl kernel-headers glibc-headers -y
+```
+2. Open vShere Client, open Console, Menu VM, Guest, Install/Upgrade VMWare Tools
+3. Mount cd in vSphere: VMwareTools, Copy and extract VMwareTools file:
+```
+cp /mnt/cdrom/VMwareTools-xxxxxxxx.tar.gz /tmp/
+cd /tmp/
+tar xvfz VMwareTools-xxxxxxxx.tar.gz
+```
+4. Install the tools with default settings:
+```
+cd /tmp/vmware-tools-distrib
+./vmware-install.pl -d
+```
+Clean up temporary files in TMP folder:
+```
+rm -rf /tmp/*	
+```	
+For Centos 7
+```
+yum -y install open-vm-tools
+systemctl start vmtoolsd.service
+systemctl enable vmtoolsd.service
+vmware-toolbox-cmd -v						
+```
+## RPM
+---
+### InstalaciÃ³n de paquetes
+```
+rpm -qa | grep paquete    // buscar
+rpm -e paquete			// desinstalar
+rpm -ivh paquete-x.rpm	// instalar
+rpm -Uvh paquete-x.rpm	// instalar y actualizar
+```
+## YUM
+---
+(*) Error YUM: (28, 'Operation too slow. Less than 1 bytes/sec transfered the last
+30 seconds') Trying other mirror.
 	
-	>> For Centos 7
-	# yum -y install open-vm-tools
-	# systemctl start vmtoolsd.service
-	# systemctl enable vmtoolsd.service
-	# vmware-toolbox-cmd -v						// version
+*Solved:*
 
-=======================================================================================
-> RPM
-=======================================================================================
-Instalación de paquetes
-	# rpm –qa | grep paquete    // buscar
-	# rpm –e paquete			// desinstalar
-	# rpm –ivh paquete-x.rpm	// instalar
-	# rpm –Uvh paquete-x.rpm	// instalar y actualizar
-
-=======================================================================================
-> YUM
-=======================================================================================
-	(*) Error YUM: (28, 'Operation too slow. Less than 1 bytes/sec transfered the last
-	30 seconds') Trying other mirror.
-	
-	Solved:
-	# yum clean all
-	# vi /etc/yum.conf
-		installonly_limit=5
-		timeout=300 # <- add, default is 30				
-		minrate=100 # <- add, default is 1000
-		bugtracker=http:\\...
+```
+yum clean all
+vi /etc/yum.conf
+	installonly_limit=5
+	timeout=300 	# <- add, default is 30				
+	minrate=100 	# <- add, default is 1000
+	bugtracker=http:\\...
 		
-	# shutdown -r now
-
-
-	# yum update					// 	Actualización del sistema con todas 
+shutdown -r now
+```
+```
+yum update						// 	ActualizaciÃ³n del sistema con todas 
 										las dependencias que sean necesarias
-	# yum search cualquier-paquete	// 	Realizar una búsqueda de algún paquete
-										o término en la base de datos en alguno 
-										de los depósitos yum configurados en el
+yum search cualquier-paquete	// 	Realizar una bÃºsqueda de algÃºn paquete
+										o tÃ©rmino en la base de datos en alguno 
+										de los depÃ³sitos yum configurados en el
 										sistema:
-	# yum remove cualquier-paquete	// 	Desinstalación de paquetes junto con 
-										todo aquello que dependa de éstos
-	# yum list available | less		// 	Listado de todos los paquetes disponibles
+yum remove cualquier-paquete	// 	DesinstalaciÃ³n de paquetes junto con 
+										todo aquello que dependa de Ã©stos
+yum list available | less		// 	Listado de todos los paquetes disponibles
 										en la base de datos yum y que pueden
 										instalarse
-	# yum list installed | less		//	Listado de todos los paquetes instalados
+yum list installed | less		//	Listado de todos los paquetes instalados
 										en el sistema
-	# yum clean all					//	Limpieza del sistema.
-	# yum grouplist					// 	Lista grupos de paquetes instalados
+yum clean all					//	Limpieza del sistema.
+yum grouplist					// 	Lista grupos de paquetes instalados
+```
 	
-	
-=======================================================================================
-> SAMBA
-=======================================================================================
-Instalación Samba
-	# yum install samba
-	# yum install samba-client		// Habilita smbpasswd en Centos 7
-	# service smb start				//	Habilitar en el firewall los puestos:  
-										TCP 139, 445 UDP 137, 138 Samba y Samba Client  
+## SAMBA
+---
+InstalaciÃ³n Samba
+
+```
+yum install samba
+yum install samba-client		# Habilita smbpasswd en Centos 7
+service smb start				# Habilitar en el firewall los puestos:  
+								TCP 139, 445 UDP 137, 138 Samba y Samba Client  
+```
+
 Configurar Samba
-	# su admin
-	$ cd /home/admin
-	$ mkdir Compartido
-	$ su -
-	# vi /etc/samba/smb.conf
+```
+su admin
+cd /home/admin
+mkdir Compartido
+su -
+vi /etc/samba/smb.conf
 		[Compartido]
         	comment = Carpeta Compartida de Linux
 	        path = /home/admin/Compartido
@@ -172,211 +201,253 @@ Configurar Samba
     	    guest ok = yes
         	directory mode = 0777
 			
-	# service smb restart			//	Reiniciar servicio samba
-	# chcon –t samba_share_t /home/admin/Compartido	
-									//	Change security context for samba
-	# chkconfig smb on				//	Configurar arranque automatico
-	# chkconfig --list 
-	
-	# Habilitar en el Firewall el puerto Samba
-	
-	# chmod 0777 /home/admin/Compartido
+service smb restart				//	Reiniciar servicio samba
+chcon -t samba_share_t /home/admin/Compartido	
+								//	Change security context for samba
+chkconfig smb on				//	Configurar arranque automatico
+chkconfig --list 
+```
+
+Habilitar en el Firewall el puerto Samba
+```	
+chmod 0777 /home/admin/Compartido
+```
 
 Habilitar usuario samba
-	# smbpasswd -a admin			//	Asignar password samba
-	# smbpasswd -e admin 			//	Habilitar usuario samba 	
-	
-Probar conexión Samba
-	\\servidorsamba\Compartido		//	Ingresar nombre de usuario habilitado samba y
-										contraseña samba
+```
+smbpasswd -a admin			//	Asignar password samba
+smbpasswd -e admin 			//	Habilitar usuario samba 	
+```	
+Probar conexiÃ³n Samba
+```
+	\\servidorsamba\Compartido		//	Ingresar nombre de usuario habilitado samba ycontraseÃ±a samba
+```
 
-***************************************	
->> Enable Samba in Centos 7
-***************************************
-	# systemctl enable smb.service
-	# systemctl enable nmb.service
-	# systemctl restart smb.service
-	# systemctl restart nmb.service
+## Enable Samba in Centos 7
+```
+systemctl enable smb.service
+systemctl enable nmb.service
+systemctl restart smb.service
+systemctl restart nmb.service
 	
-	# firewall-cmd --permanent --zone=public --add-service=samba
-	# firewall-cmd --reload
-										
-										
-=======================================================================================
-> FIREWALL
-=======================================================================================
+firewall-cmd --permanent --zone=public --add-service=samba
+firewall-cmd --reload
+```									
+
+## FIREWALL
+
 Instalar
-	# yum system-config-firewall
-	
-Desactivar firewall
-	# chkconfig iptables off
-	# chkconfig --list |grep iptables
+```
+yum system-config-firewall
+```
 
+Desactivar firewall
+```
+chkconfig iptables off
+chkconfig --list |grep iptables
+```
 Habilitar puertos tcp
-	# vi /etc/sysconfig/iptables
+```
+vi /etc/sysconfig/iptables
 	
 	-A INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -j ACCEPT 
-	# service iptables restart			
 
-=======================================================================================
-> JAVA
-=======================================================================================
+service iptables restart			
+```
+
+## JAVA
+---
+
 Version de Java
-	# java –version     
+```
+java -version     
+```
 
-Instalación Java JRE
-	# rpm –ivh jre7u10...x.rpm  
+InstalaciÃ³n Java JRE
+```
+rpm -ivh jre7u10...x.rpm  
+```
 
 Instalar JDK
-	# rpm -Uvh jdk7u...rpm
+```
+rpm -Uvh jdk7u...rpm
+```
 
-=======================================================================================
-> POSTGRES
-=======================================================================================
-Instalación de Postgres
-	(1)
-	# yum install postgresql92 postgresql92-devel postgresql92-server 
-		      postgresql92-libs postgresql92-contrib
-	(2)
-	# chmod +x postgresql-9.2.2-1-linux-x64.run
-	
-	3)
-	# ./postgresql-9.2.2-1-linux-x64.run
+## POSTGRES
+---
+InstalaciÃ³n de Postgres
 
+(1)
+```
+yum install postgresql92 postgresql92-devel postgresql92-server 
+postgresql92-libs postgresql92-contrib
+```
+(2)
+```
+chmod +x postgresql-9.2.2-1-linux-x64.run
+```
+
+(3)
+```
+./postgresql-9.2.2-1-linux-x64.run
+```
 Servicios Postgres
-
-	# service postgresql-9.2 initdb
-	# service postgresql-9.2 start
-	# service postgresql-9.2 stop
-
+```
+service postgresql-9.2 initdb
+service postgresql-9.2 start
+service postgresql-9.2 stop
+```
 Configurar el entorno de Postgres
-	# vim /var/lib/pgsql/.bash_profile
+```
+vim /var/lib/pgsql/.bash_profile
 		PATH=$PATH:$HOME/bin:/usr/pgsql-9.2/bin
 		export PATH
-
+```
 Configurar clave de Postgres
-	# su - postgres
-	# psql postgres postgres
-	# bash-4.1$ psql postgres postgres
-		psql (9.2.1)
-		postgres=# alter user postgres with password 'CLAVE';
-		ALTER ROLE
-		postgres=#
-		
+```
+su - postgres
+psql postgres postgres
+bash-4.1$ psql postgres postgres
+	psql (9.2.1)
+	postgres=# alter user postgres with password 'CLAVE';
+	ALTER ROLE
+	postgres=#
+```		
 Configurar el archivo pg_hba.conf 
-	# vi /opt/PostgreSQL/9.3/data/pg_hba.conf
+```
+vi /opt/PostgreSQL/9.3/data/pg_hba.conf
 
 		# IPv4 local connections:
 		host all all 127.0.0.1/32 	    md5
 		host all all 100.100.100.130/32 md5
-
+```
 Para que los cambios tengan efectos, volver a cargar el archivo pg_hba.conf
-	# su - postgres
+```
+su - postgres
 	-bash-4.1$ pg_ctl reload
     server signaled
-
+```
 Configurar acceso remoto a Postgres
-	#vi /opt/PostgreSQL/9.3/data/postgresql.conf
+```
+vi /opt/PostgreSQL/9.3/data/postgresql.conf
 	listen_addresses = '*' # what IP address(es) to listen on;
-
+```
 Configurar el limite de procesos concurrentes
-	#vi /var/lib/pgsql/9.2/data/postgresql.conf
-	max_connections = 250	# (change requires restart)
-	Reiniciar el servicio Postgres
-	# service postgresql-9.2 restart
+```
+vi /var/lib/pgsql/9.2/data/ostgresql.conf
 
-Configurar Postgres para que inicie automáticamente
-	# chkconfig postgresql-9.2 on
+	max_connections = 250	 (change requires restart)
+```
 
+Reiniciar el servicio Postgres
+```
+service postgresql-9.2 restart
+```
 
-=======================================================================================
-> APACHE TOMCAT
-=======================================================================================
-Instalación Tomcat
-	# mkdir /usr/local/tomcat7
-	# tar xvzf apache-tomcat-7.0.37.tar.gz
+Configurar Postgres para que inicie automÃ¡ticamente
+```
+chkconfig postgresql-9.2 on
+```
 
+## APACHE TOMCAT
+---
+InstalaciÃ³n Tomcat
+```
+mkdir /usr/local/tomcat7
+tar xvzf apache-tomcat-7.0.37.tar.gz
+```
 Configurar usuario Tomcat
-	# vi /usr/local/tomcat7/conf/tomcat-users.xml
+```
+vi /usr/local/tomcat7/conf/tomcat-users.xml
+
 	<tomcat-users>
 		<user name="tomcat" password="tomcat" roles="admin-gui,manager-gui"/>
 	</tomcat-users>
+```
 Arranque Tomcatcd
-	# cd /usr/local/tomcat7/bin/
-	# ./startup.sh
-
+```
+cd /usr/local/tomcat7/bin/
+./startup.sh
+```
 Parada Tomcat
-	# cd /usr/local/tomcat7/bin/
-	# ./shutdown.sh
-
+```
+cd /usr/local/tomcat7/bin/
+./shutdown.sh
+```
 Ampliar memoria PERM GEN Tomcat
-	# vi /usr/local/tomcat7/bin/catalina.sh
-	JAVA_OPTS=“-XX:MaxPermSize=1024m”
+```
+vi /usr/local/tomcat7/bin/catalina.sh
 
-Configurar tamaño de archivo War a publicar en Tomcat
-	# vi /usr/local/tomcat7/webapps/manager/WEB-INF/web.xml. 
+	JAVA_OPTS=--XX:MaxPermSize=1024m-
+```
+Configurar tamaÃ±o de archivo War a publicar en Tomcat
+```
+vi /usr/local/tomcat7/webapps/manager/WEB-INF/web.xml. 
 		<multipart-config> 
-		<!– 50MB max –> yu
+		<!- 50MB max -> yu
 		
 		<max-file-size>209715200</max-file-size> 
 		<max-request-size>209715200</max-request-size> 
 		<file-size-threshold>0</file-size-threshold> 
 		</multipart-config> 
-
+```
 Configurar Puerto Tomcat
-	# vi /usr/local/tomcat7/conf/server.xml
+```
+vi /usr/local/tomcat7/conf/server.xml
 	Connector port="9090" protocol="HTTP/1.1" connectionTimeout="20000" 
 			edirectPort="8443"/>
-*****************************************************
->> Enable Firewall port 8080 in Centos 7
-*****************************************************
+```
+*Enable Firewall port 8080 in Centos 7*
 
-	# firewall-cmd --zone=public --add-port=8080/tcp --permanent  
-	# firewall-cmd --reload 
+```
+firewall-cmd --zone=public --add-port=8080/tcp --permanent  
 
-=======================================================================================
-> FONTS 
-=======================================================================================
+firewall-cmd --reload 
+```
+
+## FONTS 
+---
 Configurar fonts de Windows en Linux Centos
-	# cp –ru /usr/compartido/fonts/* /usr/share/fonts		// -ru  copiar con 
-																directorios y 
-																sobrescribir
-	# fc-cache –f –v
-	# shutdown -r now	
+```
+cp -ru /usr/compartido/fonts/* /usr/share/fonts		// -ru
+			  		copiar 			con 			directorios y 
+					sobrescribir
+fc-cache -f -v
+shutdown -r now	
+```
 
-
-=======================================================================================
-> FTP
-=======================================================================================
+## FTP
+---
 Configuring ftp server on Centos 6:
 
-	Install ftp
-	# yum -y install vsftpd
-	# vim /etc/vsftpd/vsftpd.conf
+Install ftp
+```
+	yum -y install vsftpd
+	vim /etc/vsftpd/vsftpd.conf
 		anonymous_enable=NO
 		local_enable=YES
 		write_enable=YES
 		chroot_local_user=YES
 
 	Create a folder where you want to store FTP data
-	# mkdir /ftp
-	# useradd -d /ftp/carpeta juan				## Lista de Usuarios:  cat /etc/passwd
-	# passwd juan								## Asignar propietario a una archivo o carpeta:
+	mkdir /ftp
+	useradd -d /ftp/carpeta juan				## Lista de Usuarios:  cat /etc/passwd
+	passwd juan								## Asignar propietario a una archivo o carpeta:
 		New password:							## chown juan:juan carpeta
-	# ls -l /ftp
+	ls -l /ftp
 
 	Start vsftpd service by issuing the below command.
-	# service vsftpd start
-	# chkconfig --levels 235 vsftpd on
+	service vsftpd start
+	chkconfig --levels 235 vsftpd on
 
 	//	Enable port 21 FTP from FIREWALL
 		
-	# vim /etc/selinux/config and find the line
+	vim /etc/selinux/config and find the line
 	  SELINUX=disabled
 	  
-	# chmod 755 /ftp/carpeta	//<- opcional
-	# setenforce 0			    //<- opcional para habilitar en el momento
-	# shutdown -r now
+	chmod 755 /ftp/carpeta	//<- opcional
+	setenforce 0			    //<- opcional para habilitar en el momento
+	shutdown -r now
 
 	Install Client FTP (Example: Core FTP LE)
 		Site Name: Test FPT
@@ -386,34 +457,34 @@ Configuring ftp server on Centos 6:
 		Port: 21
 		Connection: FTP
 		-> Connect
-		
-=======================================================================================
-> LAMP
-=======================================================================================
-> Install Apache
-
-	# yum install httpd -y
-	# service httpd start
-	# chkconfig httpd on
+```	
+## LAMP
+### Install Apache
+```
+	yum install httpd -y
+	service httpd start
+	chkconfig httpd on
 
 	Allow Apache server default port 80 through your firewall/router if you want to connect from remote systems. To do that, edit file /etc/sysconfig/iptables,
-	# vi /etc/sysconfig/iptables
+	
+	vi /etc/sysconfig/iptables
 		[...]
 		-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEP
 		[...]
-	# service iptables restart
+	
+	service iptables restart
 
 	Test Apache:
 	Open your web browser and navigate to http://localhost/ or http://10.10.10.5
-
-> Install MySQL
-
-	# yum install mysql mysql-server -y
-	# service mysqld start
-	# chkconfig mysqld on
+```
+### Install MySQL
+```
+	yum install mysql mysql-server -y
+	service mysqld start
+	chkconfig mysqld on
 	
 	Setup MySQL root password
-	# mysql_secure_installation
+	mysql_secure_installation
 
 		Enter current password for root (enter for none):     ## Press Enter ## 
 		Set root password? [Y/n]     ## Press Enter ##
@@ -441,42 +512,44 @@ Configuring ftp server on Centos 6:
 		Cleaning up...
 
 		Thanks for using MySQL!
-
-> Install PHP
-	# yum install php -y
+```
+### Install PHP
+```
+	yum install php -y
 
 	Test PHP
-	# vi /var/www/html/info.php
+	vi /var/www/html/info.php
 		<?php
 		phpinfo();
 		?>
-	# service httpd restart	
+	service httpd restart	
 	
 	http://localhost/info.php
 
-	Get MySQL support in your PHP, you should install “php-mysql” package
+	Get MySQL support in your PHP, you should install -php-mysql- package
 	
-	# yum install php-mysql -y
-	# service httpd restart	
+	yum install php-mysql -y
+	service httpd restart	
 	
 	Now open the phptest.php file in your browser using 
 	http://localhost/info.php       # -> Scroll down and you will see the mysql module
 									#    will be presented there.
-
-> Install phpmyadmin
+```
+### Install phpmyadmin
+```
 	Add the EPEL Repository
-	# rpm -iUvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+	rpm -iUvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
 	Install phpMyAdmin
-	# yum -y update					# opcional
-	# yum -y install phpmyadmin
-	# service httpd restart
+	yum -y update					# opcional
+	yum -y install phpmyadmin
+	service httpd restart
 	
 	Test PhpMyAdmin
 	http://localhost/phpMyAdmin	
 
 	Error: Forbidden
-	# vim /etc/httpd/conf/httpd.conf
+	vim /etc/httpd/conf/httpd.conf
 
 		<Directory "/usr/share/phpMyaAdmin">
 			Order allow,deny     # <- add
@@ -484,12 +557,11 @@ Configuring ftp server on Centos 6:
 			...
 		</Directory>
 	
-	# service httpd restart
+	service httpd restart
+```
 
-										
-=======================================================================================
-> DNS
-=======================================================================================
+## DNS
+```
  (*) PERFIL DE CONFIGURACION  	
      ------------------------------------------------------ 
      IP VIRTUAL (FIREWALL): 200.105.174.210 -> 10.10.10.6
@@ -497,65 +569,62 @@ Configuring ftp server on Centos 6:
      ------------------------------------------------------ 
 	 Servidor Maestro DNS	 
      ------------------------------------------------------
-     Dirección IP:     10.10.10.6
+     DirecciÃ³n IP:     10.10.10.6
      Host-name:        dns.easba.gob.bo
      OS:               Centos 6.7 final
      ------------------------------------------------------
      Servidor Esclavo DNS
      ------------------------------------------------------
-     Dirección IP:     10.10.10.7
+     DirecciÃ³n IP:     10.10.10.7
      Host-name:        dns2.easba.gob.bo
      OS:               Centos 6.7 final
      ------------------------------------------------------
-     Máquina Cliente para utilizar DNS
+     Mï¿½quina Cliente para utilizar DNS
      ------------------------------------------------------
-     Dirección IP:     10.10.10.3
+     DirecciÃ³n IP:     10.10.10.3
      Host-name:        sistema.easba.gob.bo
      OS:               Centos 6.7 final
 	 ------------------------------------------------------
 	 	
-	 # ifconfig | grep inet				// Ver configuracion de IP
-	 # hostname							// Verificar nombre Host
-	 # cat /etc/redhat-release			// Version de Centos Linux
+	 ifconfig | grep inet				// Ver configuracion de IP
+	 hostname							// Verificar nombre Host
+	 cat /etc/redhat-release			// Version de Centos Linux
 	 
 	 > Cambiar Host Name
 	 
-	 # vim /etc/sysconfig/network
-	 # vim /etc/hosts
+	 vim /etc/sysconfig/network
+	 vim /etc/hosts
 		127.0.0.1$		localhost.localdomain	localhost
 		10.10.10.6 		dns.easba.gob.bo		dnsserver
-	 # hostname
-	 # service network restart
-	 # hostname 	
+	 hostname
+	 service network restart
+	 hostname 	
 	 
 	 > Instalar DNS Servidor Maestro
-	 # yum install bind* -y
+	 yum install bind* -y
 	 
-	 > Configuración de BIND
-	 # vim /etc/named.conf	
-	 
-
-	
-=======================================================================================
-> MYSQL ADVANCED SERVER
-=======================================================================================
+	 > Configuraciï¿½n de BIND
+	 vim /etc/named.conf	
+```
+## MYSQL ADVANCED SERVER
+---
+```
 Verificar si esta instalado MySQL
-	# rpm -qa | grep -i mysql
-	ó
-	# rpm -qa | grep MySQL
+	rpm -qa | grep -i mysql
+	rpm -qa | grep MySQL
 
-Instalación y Configuración	
-	# rpm -ivh MySQL*.rpm		// 	Instalar MySQL 
-	# service mysql status 		// 	Comprombar servicio MySQL
-	# cat /root/.mysql_secret	//	Ver clave asignada randomicamente a MySQL 	
+InstalaciÃ³n y ConfiguraciÃ³n	
+	rpm -ivh MySQL*.rpm		// 	Instalar MySQL 
+	service mysql status 		// 	Comprombar servicio MySQL
+	cat /root/.mysql_secret	//	Ver clave asignada randomicamente a MySQL 	
 									The random password set for the root user
 									at Tue Apr  9 16:02:10 2013
 									(local time): Vc6WLaX3
-	# mysql -uroot -p			//	Ingresar a la consola mysql, escribir la
-									contraseña randomica
+	mysql -uroot -p			//	Ingresar a la consola mysql, escribir la
+									contraseï¿½a randomica
 
 	mysql>SET PASSWORD FOR 'root'@'localhost'=PASSWORD('mysql');	//	Cambiar
-																		contraseña
+																		contraseï¿½a
 	mysql>CREATE USER 'admin'@'%' IDENTIFIED BY 'adminmysql'; 		//	Crear un 
 																		usuario
 																		administrador
@@ -566,31 +635,32 @@ Instalación y Configuración
 																		consola
 
 Habilitar puerto 3306 en el firewall
-	# vi /etc/sysconfig/iptables
+	
+	vi /etc/sysconfig/iptables
 	
 	-A INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -j ACCEPT	
 	
-	# service iptables restart				  						//	Reiniar el 
+	service iptables restart				  						//	Reiniar el 
 																		Firewall
-	# chkconfig mysql --level 2345 on			  					// 	Configurar 
+	chkconfig mysql --level 2345 on			  					// 	Configurar 
 																		Arranque 
 																		automatico 
 																		de MySQL
-	
 	// Probar conexion desde Navicat
 		Host Name/IP Host: 	100.100.100.30
 		Port:				3306
 		Username:			admin	
 		Password:			**********
 		Test Connection		-> Connection Successful!
-	
-=======================================================================================
-> GLASSFISH
-=======================================================================================
+```
+
+## GLASSFISH
+---
+```
 Instalacion de Glassfish Server
 	// Instalar JDK, copiar el archvio  glass...sh a /opt/glassfish
-	# chmod +x glassfish-3.0.1-unix-ml.sh
-	# ./glassfish-3.0.1-unix-ml.sh 					//	Elegir la opcion personalizada
+	chmod +x glassfish-3.0.1-unix-ml.sh
+	./glassfish-3.0.1-unix-ml.sh 					//	Elegir la opcion personalizada
 													//	Habilitar en el firewall los 
 														puertos 4848 y 8080
 Configurar PermGem 
@@ -604,31 +674,31 @@ Habilitar administracion remota
 	-> Opcion server (Admin Server), Secure Administration, Enable Secury Admin, 
 	   Restart Glassfish
 	-> https://10.10.10.20:4848 
-		
+```	
 							
-=======================================================================================
-> PASSWORD ADMIN ADN RESCUE SYSTEM
-=======================================================================================
+## PASSWORD ADMIN ADN RESCUE SYSTEM
+---
+```
 Lista de todos los Usuarios
-	#cat /etc/passwd
-	#getent passwd | cut –d”:” –f1	
-	#ls /home
+	cat /etc/passwd
+	getent passwd | cut -d-:- -f1	
+	ls /home
 
 Crear usuario
-	# adduser cliente
-	# passwd cliente
+	adduser cliente
+	passwd cliente
 
 Eliminar usuario
-	# userdel cliente
-	# rm -dfr /home/cliente
+	userdel cliente
+	rm -dfr /home/cliente
 
-Ver configuración de usuario
-	# id root
+Ver configuraciï¿½n de usuario
+	id root
 
 Ver grupos
-	# cat /etc/group	
+	cat /etc/group	
 		
-Cambiar contraseña (root)
+Cambiar contraseÃ±a (root)
 	1. Reiniciar el S.O
 	2. ESC al momento de arranque
 	3. Seleccionar la opcion: CentOS(2.6...) y presionar la tecla 'e'	
@@ -636,48 +706,49 @@ Cambiar contraseña (root)
 	   al final de la linea escribir 1 y ENTER
 	5. Al regresar al menu anterior presionar la tecla 'b'		   
 	6. Escribir el comando: passwd
-	7, Asignar nueva contraseña root y reiterar
+	7, Asignar nueva contraseï¿½a root y reiterar
 	8. reiniciar el S.O.: exit.
 
-	Para cambiar la contraseña de otro usuario escribir: # passwd usuario
-	listar todos los usuarios: # cat /etc/passwd
-	o ver usuarios de sistema: # ls -l /home
+	Para cambiar la contraseÃ±a de otro usuario escribir: passwd usuario
+	listar todos los usuarios: cat /etc/passwd
+	o ver usuarios de sistema: ls -l /home
 
-Cambiar descripción de usuario
-	# su -
-	# vi /etc/passwd			//	Cambiar descripcion entre : ???? :
-	# logout
+Cambiar descripciÃ³n de usuario
+	su -
+	vi /etc/passwd			//	Cambiar descripcion entre : ???? :
+	logout
+```
 	
-=======================================================================================
-> FILES
-=======================================================================================
+## FILES
+---
+```
 Buscar archivos
-	# find / -type f -name  archivo*	// Buscar archivos
-	# find / -type d -name directorio*	// Buscar directorios
+	find / -type f -name  archivo*	// Buscar archivos
+	find / -type d -name directorio*	// Buscar directorios
 
-Menú de arranque Linux
-	# vi /boot/grub/menu.lst
+MenÃº de arranque Linux
+	vi /boot/grub/menu.lst
 
-Reinicio rápido
-	# telinit 6
+Reinicio rÃ¡pido
+	telinit 6
 
 Listar archivos
-	# ls –l  							// Con permisos
-	# ls –a  							// Ocultos
+	ls -l  							// Con permisos
+	ls -a  							// Ocultos
 	
 Copiar archivos 
-	# cp /usr/local/tomcat/*  /home/admin
-	# cp –ru /usr/compartido/fonts/* /usr/share/fonts	// 	-ru copiar con 
+	cp /usr/local/tomcat/*  /home/admin
+	cp -ru /usr/compartido/fonts/* /usr/share/fonts	// 	-ru copiar con 
 															directorios y 
 															sobrescribir 
 Renombrar o mover archivos
-	# mv archivo.dat nombre.dat							//	Para renombrar
+	mv archivo.dat nombre.dat							//	Para renombrar
 
 Eliminar directorio
-	# rm -dfr /carpeta
+	rm -dfr /carpeta
 
 Otorgar permisos
-	# chmod a+x+r archivo
+	chmod a+x+r archivo
 
 Colores
 	Negro	= 	comunes y corrientes
@@ -686,81 +757,82 @@ Colores
 	Cyan 	= 	archivos de mapeo o enlaces o links, 
 				sirven para tener rutas alternativas
 				a un determinado objetivo
-
-=======================================================================================
-> FILES ATTRIBUTES
-=======================================================================================	
-	#chattr -RV +a 	// R es para que haga efecto en Directorios
+```
+## FILES ATTRIBUTES
+---
+```
+	chattr -RV +a 	// R es para que haga efecto en Directorios
 					// V para ver atributos
 					// +i bloquea todo, no permite copiar ni borrar
 					// -i desbloquea todo
 					// +a permite copiar archivos pero no borrar
 					// -a quita el atributo +a
 	  
-
-=======================================================================================
-> SERVIDOR
-=======================================================================================
+```
+## SERVIDOR
+---
+```
 Cambiar nombre de servidor
-	# hostname
-	# hostname nuevo-nombre-srv
-	
-=======================================================================================
-> SERVICIOS ó DEMONIOS
-=======================================================================================
-Añadir o quitar servicios al inicio del sistema
-	# chkconfig --list								//	Estado de servicios
-	# chkconfig --level 345 httpd on  				//	Iniciar el servicio httpd en 
+	hostname
+	hostname nuevo-nombre-srv
+```
+## SERVICIOS ï¿½ DEMONIOS
+---
+```
+AÃ±adir o quitar servicios al inicio del sistema
+	chkconfig --list								//	Estado de servicios
+	chkconfig --level 345 httpd on  				//	Iniciar el servicio httpd en 
 														los niveles 3, 4 y 5
-	# chkconfig  httpd off							//	Inhabilitar el servicio
-	# chkconfig –-add mysql
-	# chkconfig --del mysql
+	chkconfig  httpd off							//	Inhabilitar el servicio
+	chkconfig ï¿½-add mysql
+	chkconfig --del mysql
 
 Arranque manual de Servicios: directorio init.d
-	# /etc/rc.d/init.d/smb start
-
-=======================================================================================
-> SERVICIOS DESDE ARRANQUE DE SISTEMA
-=======================================================================================	
+	/etc/rc.d/init.d/smb start
+```
+## SERVICIOS DESDE ARRANQUE DE SISTEMA
+---
+```
 Iniciando servicios 
-	# init 5	//	0 Detener o apagar el sistema
+	init 5	//	0 Detener o apagar el sistema
 				//	1 Modo monousuario, utilizado para mantenimiento del sistema
 				//	2 Modo multiusuario, pero sin soporte de red
 				//	3 Modo multiusuario completo, con servicios de red
 				//	4 No se usa, puede usarse para un inicio personalizado
-				//	5 Modo multiusuario completo con inicio gráfico ( X Window)
+				//	5 Modo multiusuario completo con inicio grÃ¡fico ( X Window)
 				//	6 Modo de reinicio (reset) 
 Configurar nivel de arranque
-	# vi /etc/inittab 	
+	vi /etc/inittab 	
 
 		id:5:initdefault:
 
 Forzar Inicio
-	# sync; init 0		//	Forzar apagado guardando datos en disco duro
-	# sync; init 6 		//	Forzar reinicio	guardando datos -> No usar
-	
-=======================================================================================
-> TECLADO
-=======================================================================================
+	sync; init 0		//	Forzar apagado guardando datos en disco duro
+	sync; init 6 		//	Forzar reinicio	guardando datos -> No usar
+```
+
+## TECLADO
+---
+```
 Configurar Teclado
-	# system-config-keyboard
-	# shutdown -r now
-
-=======================================================================================
-> LOG - Historial de Eventos
-=======================================================================================
+	system-config-keyboard
+	shutdown -r now
+```
+## LOG - Historial de Eventos
+---
+```
 Ver registro Log
-	# lastlog
-	# vi /var/log/secure
-
-=======================================================================================
-> SSH
-=======================================================================================
+	lastlog
+	vi /var/log/secure
+```
+## SSH
+---
+```
 Instalar SSH
-	# yum -y install openssh openssh-server openssh-clients 
+	yum -y install openssh openssh-server openssh-clients 
 
 Configurar SSH
-	# vi /etc/ssh/sshd_config
+	vi /etc/ssh/sshd_config
 		Port 22022							//	Cambiar puerto
 												default 22 
 											//	Habilitar el puerto 
@@ -771,28 +843,28 @@ Configurar SSH
 		AllowUsers 	admin@100.100.100.33 
 					admin@100.100.100.130	// 	Permitir acceso de 
 												usuarios 
-	# service sshd restart					// 	Reiniciar servicio ssh
-
-=======================================================================================
-> VNC SERVER
-=======================================================================================
-Instalación	
-	# yum install tigervnc-server vnc-server	//	Instalar vnc-server
-	# chkconfig vncserver on 					//	Configurar Arranque automatico
-	# useradd vncuser							//	adicionar usuario vnc
-	# passwd vncuser							//	contraseña usuario
-	# su vncuser
-	$ vncpasswd									//	Asignar contraseña de conexion
+	service sshd restart					// 	Reiniciar servicio ssh
+```
+## VNC SERVER
+---
+InstalaciÃ³n
+```	
+	yum install tigervnc-server vnc-server	//	Instalar vnc-server
+	chkconfig vncserver on 					//	Configurar Arranque automatico
+	useradd vncuser							//	adicionar usuario vnc
+	passwd vncuser							//	contraseÃ±a usuario
+	su vncuser
+	vncpasswd									//	Asignar contraseÃ±a de conexion
 													remota 
-	$ su admin									// 	Habilitar usuario admin como
+	su admin									// 	Habilitar usuario admin como
 													usuario VNC
-	$ vncpasswd									//	Asignar contraseña de conexion
+	vncpasswd									//	Asignar contraseÃ±a de conexion
 													remota
-	$ ls -a /home/admin/.vnc/					//	Verificar creación de contraseña
+	ls -a /home/admin/.vnc/					//	Verificar creaciÃ³n de contraseï¿½a
 													VNC
-	$ exit
-	$ su -
-	# vi /etc/sysconfig/vncservers				// Habilitar Usuarios
+	exit
+	su -
+	vi /etc/sysconfig/vncservers				// Habilitar Usuarios
 		
 		VNCSERVERS="2:admin 3:vncuser"
 		VNCSERVERARGS[2]="-geometry 1024x768"	
@@ -802,23 +874,22 @@ Instalación
 													5902 -> Usuario 2
 													5903 -> Usuario 3
 													5904 -> etc.	
-	# service vncserver start
+	service vncserver start
 
-	# yum install pixman pixman-devel libXfont	//	Instalar libFonts
+	yum install pixman pixman-devel libXfont	//	Instalar libFonts
 
 Conexion remota
 	RUN: VNC-Viewer
 		-> VNC Server: 100.100.100.31:2			//	Conexion remota mediante Usuario 2
 		-> Encryption: Prefer on
- 		   -> password:  contraseña usuario 2 (admin)
+ 		   -> password:  contraseÃ±a usuario 2 (admin)
 		   
 		-> VNC Server: 100.100.100.31:3			//	Conexion remota mediante Usuario 3
 		-> Encryption: Prefer on
- 		   -> password:  contraseña usuario 3 (vncuser)   
-		
-=======================================================================================
-> SERVER OFF
-=======================================================================================
+ 		   -> password:  contraseÃ±a usuario 3 (vncuser)   
+```
+## SERVER OFF
+---
 	# poweroff				// Para apagar
 	# shutdown -h now		// Apagar ahora
 	# shutdown -r now		// Reiniciar ahora
@@ -826,23 +897,23 @@ Conexion remota
 	# reboot				// Forzar reinicio
 	# telinit 6    			// Reiniciar en el nivel 6 
 
-=======================================================================================
->> SET DATE-TIME CENTOS 7 
-=======================================================================================
+
+## SET DATE-TIME CENTOS 7 
+---
 	# timedatectl							// get date time
 	# timedatectl set-time 2014-12-08
 	# timedatectl set-time 10:24:34
 
-=======================================================================================
-> MISCELANIA
-=======================================================================================
-Administración de Servicios en modo Gráfico
-	# yum install system-config-services
-	# system-config-services
+## MISCELANIA
+---
+AdministraciÃ³n de Servicios en modo GrÃ¡fico
+```
+	yum install system-config-services
+	system-config-services
 
-Versión de Linux
-	# cat /proc/versión
-	# uname –m				// ver arquitectura SO Linux
+VersiÃ³n de Linux
+	cat /proc/versiÃ³n
+	uname -m				// ver arquitectura SO Linux
 
 demonio = servicio
 
@@ -852,9 +923,9 @@ Shortcuts
 	Ctrl+Alt+D   			= Minimizar todas las ventanas 
 	Ctrl+Alt+L   			= Bloquear pantalla 
 	Alt+F7	     			= Mover las ventanas con las teclas de flechas
-	Mayús + F10  			= Método abreviado para el botón derecho del ratón
+	Mayus + F10  			= MÃ©todo abreviado para el botÃ³n derecho del ratÃ³n
 
-
+```
 
 
 
