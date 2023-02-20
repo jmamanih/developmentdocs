@@ -28,7 +28,16 @@ MySQL es un sistema de gestión de bases de datos relacional desarrollado bajo l
 *Detener servico de MySql*
 
         brew services stop mysql
-        
+
+*Resetear la contraseña de root*
+
+        brew services stop mysql
+
+        mysqld_safe --skip-grant-tables --skip-networking&      #iniciará MySQL sin
+                                                                emplear el sistema de privilegios
+
+        brew services start mysql
+        mysql -u root
 
 <a id="idsec30">
 
