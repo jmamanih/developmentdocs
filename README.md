@@ -75,7 +75,7 @@ Es el estudio, diseño, desarrollo, puesta en producción, ayuda o gerencia de l
 
 ## EL PODER DE LA LINEA DE COMANDOS
 
-* [Configuración de la Terminal en MacOS](Config_terminal_MacOS/configTerminal.md)
+* [Configuración de la Terminal en MacOS](Config_Terminal_MacOS/configTerminal.md)
 * [NeoVim MacOs](NeoVim/Neovim_MacOs.md)
 * [NeoVim Linux](NeoVim/Neovim_Linux.md)
 * [Tmux](Tmux/Tmux.md)
