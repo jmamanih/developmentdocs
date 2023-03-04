@@ -35,9 +35,35 @@ MySQL es un sistema de gestión de bases de datos relacional desarrollado bajo l
 
         mysqld_safe --skip-grant-tables --skip-networking&      #iniciará MySQL sin
                                                                 emplear el sistema de privilegios
-
+        FLUSH PRIVILEGES;
         brew services start mysql
         mysql -u root
+
+*Errores al resetear pasword*
+
+1. The MySQL server is running with the --skip-grant-tables option so it cannot execute this statement
+
+   Sol.
+
+         FLUSH PRIVILEGES;
+
+2. Your password does not satisfy the current policy requirements
+
+   Sol.
+
+        SHOW VARIABLES LIKE 'validate_password%';
+        
+        SET GLOBAL validate_password.length = 6;
+        SET GLOBAL validate_password.number_count = 0;
+        SET GLOBAL validate_password.policy = 0;
+
+*Configuración de MySQL*
+
+        sudo mysql_secure_installation
+
+*Cambiar contraseña de root*
+
+        sudo mysql -u root -p
 
 <a id="idsec30">
 

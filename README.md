@@ -17,7 +17,7 @@ Es el estudio, diseño, desarrollo, puesta en producción, ayuda o gerencia de l
 
 ## INSTALACIÓN Y CONFIGURACIÓN DE SISTEMAS OPERATIVOS
 
-* [MacOsX](MACOS/002_Tools_Instalation.md)
+* [MacOsX](MacOS/MacOs.md)
 * [Linux Debian v10](LINUX_DEBIAN/Debian_v10_Buster.md)
 * [Linux Centos](LINUX_CENTOS/Centos_Linux_Commands.md)
 
@@ -66,21 +66,21 @@ Es el estudio, diseño, desarrollo, puesta en producción, ayuda o gerencia de l
 * [Postman](Postman/Postman.md)
 * [Sublime_Text](Sublime_Text/Sublime_Text.md)
 * [Visual Studio Code](DEVELOPER_TOOLS/Visual_Studio_Code.md)
+* [Visual Paradigm](Visual_Paradigm/Visual_Paradigm.md)
+* [Visual Studio](Visual_Studio/001_Instalacion.md)
 
 ## HERRAMIENTAS SEO
 
 * [Google Analitics](SEO_TOOLS/Google_Analitics.md)
 
-
 ## EL PODER DE LA LINEA DE COMANDOS
 
-* [iTerm MacOS](MacOS/iTerm/iTerm.md)
+* [Configuración de la Terminal en MacOS](Config_terminal_MacOS/configTerminal.md)
 * [NeoVim MacOs](NeoVim/Neovim_MacOs.md)
 * [NeoVim Linux](NeoVim/Neovim_Linux.md)
 * [Tmux](Tmux/Tmux.md)
 * [Vim](Vim/Vim.md)
-* [Visual Paradigm](Visual_Paradigm/Visual_Paradigm.md)
-* [Visual Studio](Visual_Studio/001_Instalacion.md)
+
 
 ## MISCELANIA
 
