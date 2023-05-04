@@ -19,27 +19,27 @@ Para ejecutar el comando brew debe instalar previamente [Homebrew](Homebrew.md)
 ## Personalizar la Terminal
 [Install Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh)
 
-```
+```sh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
-```
+```sh
 brew doctor
 ```
 
-```
+```sh
 echo 'export PATH="/usr/local/sbin:$PATH"' >> ~/.zrc
 ```
 
-```
+```sh
 brew doctor
 ```
 
-```
+```sh
 brew prune
 ```
 Para ver los cambios cierre la terminal y vuelva a abrirla.
 
 ## Recomendaciones
-[Personalizacion de la Terminal en MacOS](configureMacOSTerminal.md), es una guía completa para personalizar la terminal en MacOS cambiando su apariencia y la facilidad para ejecutar comandos mediante los hotkeys.
+[Personalizacion de la Terminal en MacOS](../Config_Terminal_MacOS/configTerminal.md), es una guía completa para personalizar la terminal en MacOS cambiando su apariencia y la facilidad para ejecutar comandos mediante los hotkeys.
 

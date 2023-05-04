@@ -715,7 +715,7 @@ el modo actual se encuentra definido en:
 
 **Definir credenciales para conectar a una base de datos**
 
-```json
+```sh
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -728,7 +728,7 @@ DB_PASSWORD=12345
 
 Crear una base de datos (lapazdigitaldb), crear un usuario (dev) y asignarle todos los privilegios.
 
-```sql
+```sh
 
 mysql -u root
 
