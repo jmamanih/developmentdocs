@@ -17,7 +17,7 @@
 	Widht: 200
 	Name: image_name
 
-* Target Manager, Select Database_name, Click Dowload Database, Select a development plataform: Unity Editor, Button Download
+* Target Manager, Select Database_name, Click Dowload Database, Select a development plataform: Unity Editor, Button Download, Generate file database_name.unitypackage 
 * Create Licence Key 
 	Open [Vuforia development portal](https://developer.vuforia.com/targetmanager/licenseManager/summaryForFreePlan), Licence Manager, 
 	Add a Free Developmen Licence Key, App Name: nameApp, Button Confirm, click nameApp, copy Licence Key
