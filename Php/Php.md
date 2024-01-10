@@ -10,16 +10,30 @@ En la actualidad, la implementación de referencia de PHP es producida por The P
 
 PHP originalmente significaba Personal Home Page (Página personal), pero ahora significa el inicialismon recursivo PHP: Hypertext Preprocessor.
 
-## CONTENIDO
-
-* Instalación en Windows
-* Instalación en MacOs
-* Instalación en Linux 
-
 ## Instalaciones previas
 
-* [Git]()
-* [curl]()
+* [Git](/Git/Git.md)
 
+
+## Instalación de php en MacOs
+
+* Asegurarse de haber instalado Homebrew
+```sh
+  brew -v
+  brew update
+```
+* Instalar php
+
+```sh
+  brew install php
+```
+* Verificar la version de php
+```sh
+  php - v
+```
+* Actualizar la versión de php
+```sh
+  brew upgrade php
+```
 
 

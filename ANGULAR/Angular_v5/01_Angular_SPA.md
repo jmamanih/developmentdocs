@@ -22,6 +22,7 @@ SPA son las siglas de Single Page Application. Es un tipo de aplicación web don
 https://semver.org
 
 Versio: X.Y.Z
+
 	X: MAJOR version, cuando se realiza cambios incompatibles de API
 	Y: MINOR version, cuando de agregan funcionalidades compatibles con versiones anteriores
 	Z: PATCH version, cuando se hacen correcciones de errores compatibles con versiones anteriores
