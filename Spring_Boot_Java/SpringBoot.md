@@ -19,7 +19,10 @@ Paso previo: [Instalar Java](../Java/Install_Java.md)
 Ejemplo:
 ![Crear un Proyecto](images/initializr.png)
 
+Referencia [Iniciar Proyecto Spring Boot](https://www.arteco-consulting.com/post/tu-primera-aplicacion-con-spring-boot)
+
 ```sh
+Project: Maven Project
 Language: Java
 Spring Boot: 3.2.1
 Project Metadata:
@@ -61,7 +64,6 @@ A JDBC and R2DBC driver that allows Java programs to connect to a PostgreSQL dat
     Run > Edit Configurations > Maven
         Run: spring-boot:run
         Button Apply, Ok
-
 
 
 ## Establecer conexión con la Base de Datos Postgres
