@@ -1,10 +1,16 @@
- # POSTMAN
+# POSTMAN
 
- ## Instalación en Linux Debian
+## Instalación en MacOs
 
- Descargar la última versión desde su sitio oficial https://www.postman.com/downloads/
+Descargar el Intalador de [Postman](https://www.postman.com/downloads/)
+Instalar
+Crear una cuenta o ingresar con cuenta de correo Gmail
 
- Ejecutar los siguientes comandos
+## Instalación en Linux Debian
+
+Descargar la última versión desde su sitio oficial https://www.postman.com/downloads/
+
+Ejecutar los siguientes comandos
 
     cd Downloads/
     tar -xzf Postman-linux-x64-7.32.0.tar.gz

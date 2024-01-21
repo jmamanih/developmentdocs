@@ -3,56 +3,51 @@
 ## Instalar Postgres en MacOsX
 
 Actualizar brew
+
 ```sh
 brew update
 brew doctor
 ```
+
 Instalar postgresql
+
 ```sh
 brew install postgresql
 ```
 
 Verificar la instalación
+
 ```sh
 postgres --version
 ```
 
 Iniciar Gestor de Base de Datos
+
 ```sh
 brew services stop postgresql
 brew services start postgresql
 ```
+
 Listar los servicios activos
+
 ```sh
 brew services list
 ```
-NOTA: Error ...bootstrap /gui/501...
-Sol. Ejecutar los siguientes comandos
 
-```sh
-# Remove postgresql 14 with brew 
-brew remove postgresql@14
-
-# Reinstall postgresql 14 with brew
-brew install postgresql@14
-
-# Remove all the files in the db folder
-rm -rf /usr/local/var/postgresql@14/*
-
-# Kill all process that run any db of the postgresql 14 folder 
-pkill -f /usr/local/var/postgresql@14   
-   
-# Initialize the db folder for postgresql 14 
-initdb --locale=C -E UTF-8 /usr/local/var/postgresql@14
-
-# Restart postgresql with brew (should say that it's already running) 
-brew services start postgresql@14
-```
+NOTA.
 Error: psql: FATAL: role "postgres" does not exist
 Sol.
 
 ```sh
 createuser -s postgres
+brew services restart postgresql
+```
+
+Error: No ingresa a psql
+Sol.
+
+```sh
+rm /usr/local/var/postgresql@14/postmaster.pid
 brew services restart postgresql
 ```
 
@@ -68,21 +63,35 @@ psql -U postgres
 password: postgres
 ```
 Cambio de contraseña.
+
 ```sh
     =# ALTER ROLE postgres PASSWORD 'postgres';
 ```
-Reiniciar el servicio.
+Otra forma de cambiar contraseña
+
 ```sh
-brew services start postgresql
+psql postgres
+    \password postgres
 ```
+
+Reiniciar el servicio de postgres
+
+```sh
+brew services restart postgresql@14
+```
+
 Creando la base de datos.
+
 ```sh
 =# CREATE DATABASE nombre_db;
 ```
+
 Lista las bases de datos existentes.
+
 ```sh
 =# \l
 ```
+
 Para salir
 ```sh
 =# \q

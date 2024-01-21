@@ -77,10 +77,9 @@ tmux_conf_theme_status_left_attr='bold,none,none'
 
 * Left-Right Status Bar
 
-```
+```sh
 tmux_conf_theme_status_left=' ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} '
 tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} #{?battery_status, #{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery$
-
 ```
 * Restart System
 * Run tmux
@@ -276,11 +275,11 @@ Q para salir
 ## Instalar CMatrix
 
 ```sh
-brew install cmatriz
+brew install cmatrix
 ```
 Mostrar efecto Matriz
 ```sh
-cmatriz
+cmatrix
 ```
 Q para salir
 

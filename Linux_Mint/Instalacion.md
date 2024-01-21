@@ -152,6 +152,20 @@ psql
         \password postgres              # cambiar contraseña del usuario postgres
         \q                              # salir
 ```
+
+Servicios de Postgres
+
+```sh
+sudo systemctl restart postgresql
+sudo systemctl stop  postgresql
+sudo systemctl start  postgresql
+```
+```sh
+sudo service postgresql restart
+sudo service postgresql start
+sudo service postgresql stop
+```
+
 ## Instalar Gestor de Base de Datos (DBeaver)
 
 Descargar el archivo .deb del sitio [DBeaver](https://dbeaver.io/download/)
@@ -192,8 +206,14 @@ sudo apt install terminator
 terminator --version
 terminator
 ```
+Establecer terminal por defecto
 
-# Instalar y usar Zsh con Oh-My-Zsh
+```sh
+sudo update-alternatives --config x-terminal-emulator
+        # Seleccionar la Terminal
+```
+
+## Instalar y usar Zsh con Oh-My-Zsh
 
 1. Actualizar el Sistema
 
@@ -201,29 +221,55 @@ terminator
 sudo apt update
 sudo apt install wget curl git -y
 ```
+2. Verificar el Shell por defecto
 
-2. Instalar Zsh
+```sh
+echo $SHELL
+```
+
+3. Instalar Zsh
 
 ```sh
 sudo apt install zsh -y
 zsh --version
 ```
 
-3. Cambiar a Zsh Shell
+4. Cambiar a Bash o Zsh
+
+Cambiar a Bash
 
 ```sh
-sudo chsh -s /usr/bin/zsh $USER
-echo $SHELL
+bash
 ```
 
-4. Instalar Oh-My-Zsh
+Cambiar a Zsh
+
+```sh
+zsh
+```
+5. Cambiar Shell por defecto
+
+Cambiar a Zsh por defecto
+
+```sh
+chsh -s $(which zsh)
+```
+Cambiar a Bash por defecto
+
+```sh
+chsh -s $(which bash)
+```
+Nota: Para ver los cambios reiniciar el sistema
+
+
+6. Instalar Oh-My-Zsh
 
 ```sh
 sudo apt install wget git
 wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 ```
 
-5. Crear un archivo de configuración para Zsh 
+7. Crear un archivo de configuración para Zsh 
 
 ```sh
 cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
@@ -231,7 +277,7 @@ source ~/.zshrc
 ```
 
 
-6. Cambiar el tema predeterminado de Zsh 
+8. Cambiar el tema predeterminado de Zsh 
 
 Comprobar temas disponibles por defecto esta 'robbyrusell'
 
@@ -248,7 +294,7 @@ vim ~/.zshrc
 ```sh
 source ~/.zshrc
 ```
-7. Habilitar los complementos Oh-My-Zsh
+9. Habilitar los complementos Oh-My-Zsh
 
 Verificar los complementos disponibles
 
@@ -347,8 +393,8 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir newline status)
-POWERLEVEL9K_OS_ICON_FOREGROUND=202
-POWERLEVEL9K_OS_ICON_BACKGROUND=025
+POWERLEVEL9K_OS_ICON_FOREGROUND=214
+POWERLEVEL9K_OS_ICON_BACKGROUND=018
 POWERLEVEL9K_CONTEXT_TEMPLATE='%n'
 POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND=019
 POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND=034
@@ -366,7 +412,7 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 #POWERLEVEL9K_FOLDER_ICON=''
 POWERLEVEL9K_STATUS_VERBOSE=true
 POWERLEVEL9K_STATUS_CROSS=true
-POWERLEVEL9K_STATUS_OK_FOREGROUND=220
+POWERLEVEL9K_STATUS_OK_FOREGROUND=046
 POWERLEVEL9K_STATUS_OK_BACKGROUND=020
 POWERLEVEL9K_STATUS_ERROR_BACKGROUND=017
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs)
@@ -418,7 +464,7 @@ sudo apt install vim
 
 ## Instalar Tmux
 
-Instalar Tmux
+*Instalar Tmux*
 
 ```sh
 sudo apt update
@@ -428,3 +474,154 @@ tmux -V
 ```
 
 Ver comandos [Tmux](/Tmux/Tmux.md)
+
+*Oh My Tmux*
+
+[Fuente :Oh My Tmux](https://github.com/gpakosz/.tmux) 
+
+Requerimientos: tmux >= 2.1
+
+```sh
+tmux -V
+```
+
+* Para tmux $TERM debe estar configurado xterm-256color
+
+editar el archivo  ~/.zshrc
+
+```sh 
+vim ~/.zshrc
+```
+```sh
+export TERM="xterm-256color"
+```
+
+*Instalar Oh My Tmux*
+
+Cambiar de Directorio ~
+
+```sh
+cd ~
+```
+
+* Realizar copia de seguridad si existiera el archivo ~/.tmux.conf
+
+```sh
+cp ~/.tmux.conf ~/.tmux.conf.backup
+```
+
+* Ejecutar lo siguiente
+
+```sh
+git clone https://github.com/gpakosz/.tmux.git
+ln -s -f .tmux/.tmux.conf
+cp .tmux/.tmux.conf.local .
+``` 
+
+*Habilitar el aspecto de Powerline*
+
+Verificar si esta intalado PowerlineSymbol
+
+```sh
+fc-list | grep -i powerline
+```
+Editar el archivo ~/.tmux.conf.local y ajustar las siguientes variables existentes:
+
+```sh
+vim ~/.tmux.conf.local
+```
+```sh
+tmux_conf_theme_left_separator_main='\uE0B0'
+tmux_conf_theme_left_separator_sub='\uE0B1'
+tmux_conf_theme_right_separator_main='\uE0B2'
+tmux_conf_theme_right_separator_sub='\uE0B3'
+```
+
+Personalizar Colores, editar el archivo ~/.tmux.conf.local
+
+```sh
+# status left style
+tmux_conf_theme_status_left_fg='#000000,#000000,#e4e4e4'  # black, white , white
+tmux_conf_theme_status_left_bg='#ffff00,#00FF00,#00afff'  # yellow, pink, white blue
+tmux_conf_theme_status_left_attr='bold,none,none'
+```
+
+Reiniciar sistema
+Ejecutar Tmux
+
+## Paquetes Miscelania para la Terminal
+
+*Instalar Calcurse*
+
+```sh
+sudo apt install calcurse 
+calcurse
+```
+
+*Instalar htop*
+
+```sh
+sudo apt install htop
+htop
+```
+
+*Instalar tty-clock*
+
+```sh
+sudo apt install tty-clock
+tty-clock
+tty-clock -s
+```
+*Instalar Neofetch*
+
+
+```sh
+sudo apt install neofetch 
+neofetch
+neofetch --help
+```
+
+*Instalar Cowsay*
+
+Muestra un mensaje en pantalla con la figura de una vaca
+
+```sh
+sudo apt install cowsay
+cowsay "Hello World"
+```
+
+*Instalar CMatrix*
+Mostrar efecto Matriz
+
+```sh
+sudo apt install cmatrix
+cmatrix
+```
+Q para salir
+
+*Instalar Ranger*
+
+```sh
+sudo apt install ranger
+ranger
+```
+
+*Instalar GoTop*
+GoTop, monitoriza la actividad de tu sistema
+
+Descargar goTop de la pagina [GoTop](https://github.com/cjbassi/gotop/releases)
+
+Instalar GoTop
+
+```sh
+cd ~
+sudo dpkg -i Descargas/gotop_3.0.0_linux_amd64.deb
+gotop
+gotop --help
+gotop -m     # minimalista
+```
+
+Para saber cómo usar gotop, solo hay que pulsar “?” dentro de la TUI de la herramienta.
+
+Q para salir
+
