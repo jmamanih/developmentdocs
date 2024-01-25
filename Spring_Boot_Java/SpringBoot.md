@@ -150,7 +150,7 @@ Editar el archivo de dependencias y plugins
 
 Ruta: /
 Archivo: pom.xml
-```sh
+```xml
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -245,18 +245,38 @@ Nota: Las extensiones de los archivos creados son .java
 
 ![Arquitectura Spring Boot](images/arqcapas.png)
 
-## Crear un API REST CRUD para una tabla
+## Reducir código con la libreria (Lombok)
+
+Es una librería que nos ayuda a reducir líneas de código típicas de getters y settter en clases.
 
 Adicionar la dependencia Lombok
 Ruta: /
 Archivo: pom.xml
-```sh
+```xml
 <dependency>
     <groupId>org.projectlombok</groupId>
     <artifactId>lombok</artifactId>
     <optional>true</optional>
 </dependency>
 ```
+
+Nota: para que el ID detecte las funciones de Lombok se debe instalar tambien el Plugin de Lombok en IntelliJ IDEA CE
+
+    IntelliJ IDE Menu > Preferences > Plugins
+        Install: Lombok
+
+Anotaciones:
+
+    @Data
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @Log
+
+## Crear un API REST CRUD para una tabla
+
 *Como ejemplo se creara una tabla paramétrica Deptos (Departamentos)*
 
 Crear Paquete Entity
@@ -444,4 +464,313 @@ Modificar un registro
 Eliminar registro
 
     DELETE: localhost:9090/api/depto/1
+
+## Documentar las API REST
+
+Referencias:
+* [Springdoc Openapi](https://springdoc.org/)
+* [Documenting a Spring Rest](https://www.baeldung.com/spring-rest-openapi-documentation)
+* [Swagger 2.x Annotation](https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations)
+
+Adicionar la dependencia
+Ruta: /
+Archivo: pom.xml
+
+```xml
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    <version>2.3.0</version>
+</dependency>
+```
+
+Configurar swagger en el archivo de propiedades
+Ruta: src/main/resources
+Archivo: application.Properties
+
+```sh
+# swagger documentation
+springdoc.swagger-ui.enabled=true
+springdoc.api-docs.enabled=true
+springdoc.swagger-ui.path=/swagger-ui.html
+```
+
+Probar funcionamiento abriendo la dirección:
+
+    http://localhost:9090/swagger-ui.html
+
+Documentar Información General de la API 
+
+Ruta: src/main/java/bo.gob.pge.rope/controller
+Archivo: DeptoController
+
+```java
+@OpenAPIDefinition (info =
+    @Info(
+        title = "API DEPTO",
+        version = "1.0",
+        description = "Servicios API REST para la tabla 'Depto'\nTabla paramétrica donde se almacenan los datos de los departamentos del país"
+        license = @License(name = "PGE - ROPE Versión 2.0", url = "http://foo.bar"),
+        contact = @Contact(url = "http://gigantic-server.com", name = "Fred", email = "Fred@gigagantic-server.com")
+    )
+)
+public class DeptoController {
+    ...
+}
+```
+
+Documentar Información de la API especifico
+
+Ruta: src/main/java/bo.gob.pge.rope/controller
+Archivo: DeptoController
+
+```java
+@Operation(summary = "Obtiene datos de la tabla 'Deptos'", description = "Obtiene Listado General de la Tabla 'Deptos'")
+@ApiResponse(responseCode = "200", description = "Departamentos Encontrados")
+@ApiResponse(responseCode = "400", description = "Parámetros Proporcionados no validos")
+@ApiResponse(responseCode = "404", description = "Departamentos no encontrados")
+@GetMapping
+public List<Depto> getDeptos() {
+    return deptoService.getDeptos();
+}
+```
+## Validación de campos
+
+Para la validación agregar la dependencia: 
+
+```xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+```
+
+*Anotaciones:*
+
+|Anotación  	|Tipos 	          |Explicación|
+|---------------|-----------------|-----------|
+|@AssertFalse 	|Boolean, boolean 	|El booleano deberá ser false
+|@AssertTrue 	|Boolean, boolean 	|El booleano deberá ser true
+|@Digits(integer=n, fraction=m) 	|Cualquier tipo numérico 	|Especifica el nº máximo de cifras enteras y decimales
+|@Future 	    |java.util.Date y java.util.Calendar 	|La fecha debe ser mayor que ahora
+|@Past 	        |java.util.Date y java.util.Calendar 	|La fecha debe ser menor que ahora
+|@Max(n) 	    |Cualquier tipo numérico 	|El valor deberá ser menor o igual a n
+|@Min(n) 	    |Cualquier tipo numérico 	|El valor deberá ser mayor o igual a n
+|@NotNull 	    |Object 	|El objeto no puede ser null
+|@Null          |Object 	|El objeto debe ser null
+|@Pattern(regexp=“r”) 	|String 	|Comprueba que el valor se ajusta a la expresión regular r
+|@Size(min=n, max=m) 	|String o colecciones 	|El tamaño del String o la colección debe estar entre n y m.
+|@Email 	    |String 	|El valor tiene el formato de una dirección de correo electrónico
+|@NotBlank 	    |String 	|Comprueba que el String no sea null y que al hacer un trim() aún haya algún caracter
+|@Valid 	    |Object 	|Si el campo es otro objeto que tiene sus propias validaciones, con esta anotación indicaremos que también debe validarse ese otro objeto 
+
+*Anotar la validación antes del un campo*
+
+Ruta: Ruta: src/main/java/bo.gob.pge.rope/entity
+Archivo: Depto (Class)
+
+```java
+package bo.gob.pge.rope.model;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+@Entity
+@Table (name = "deptos")
+@Data                    // Getters, Setters y Constructor
+public class Depto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false, unique = true)
+    @NotBlank(message = "El nombre del departamento, es requerido")
+    private String descrip;
+    @Column(nullable = false, unique = true)
+    @NotBlank(message = "Asigne un código de departamento")
+    private String cod;
+}
+```
+
+*Asignar la anotaciión @Valid en el controlador*
+
+Ruta: Ruta: src/main/java/bo.gob.pge.rope/controller
+Archivo: DeptoController
+
+```java
+// ...
+
+@PostMapping
+@Operation(summary = "Adiciona datos en la tabla 'Deptos'", description = "Adiciona un registro en la Tabla 'Deptos'")
+public Depto createDepto(@Valid @RequestBody Depto depto) {
+    return deptoService.createDepto(depto);
+
+@PutMapping
+@Operation(summary = "Modifica datos de la tabla 'Deptos'", description = "Modifica un registro de la Tabla 'Deptos'")
+public Depto updateDepto(@Valid @RequestBody Depto updatedDepto) {
+    return deptoService.createDepto(updatedDepto);
+}
+
+// ...
+```
+
+## Manejo de Errores o Excepciones
+
+*Crear el paquete manejador de Errores y archivos de clase*
+
+Ruta: src/main/java/bo.gob.pge.rope/
+Paquete: error
+
+*Crear archivo de clase EntityError, la estructura de un mensaje de error*
+
+Ruta: src/main/java/bo.gob.pge.rope/error
+Archivo: ErrorResponse (Class)
+
+```java
+package bo.gob.pge.rope.error;
+
+import lombok.*;
+
+import java.util.Date;
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ErrorResponse {
+
+    private int status;
+    private String message;
+    private Date timestamp;
+    List<String> errors;
+    ErrorResponse(String message) {
+        this.message = message;
+    }
+}
+```
+*Crear el archivo InvalidDataException*
+
+Ruta: src/main/java/bo.gob.pge.rope/error
+Archivo: InvalidDataException (Class)
+
+```java
+package bo.gob.pge.rope.error;
+
+import lombok.Getter;
+import org.springframework.validation.BindingResult;
+@Getter
+public class InvalidDataException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+    private final transient BindingResult result;
+    public InvalidDataException(BindingResult result) {
+        super();
+        this.result = result;
+    }
+    public InvalidDataException(String message, BindingResult result) {
+        super(message);
+        this.result = result;
+    }
+}
+```
+
+*Crear el archivo manejador de errorees RestExceptionHandler*
+
+Ruta: src/main/java/bo.gob.pge.rope/error
+Archivo: RestExceptionHandler (Class)
+
+```java
+package bo.gob.pge.rope.error;
+
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.validation.FieldError;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.util.Date;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
+@ControllerAdvice
+public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+    @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleException(NoSuchElementException exc) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        return buildResponseEntity(httpStatus, exc);
+    }
+    @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleException(DuplicateKeyException exc) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        return buildResponseEntity(httpStatus, exc);
+    }
+    @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleException(IllegalArgumentException exc) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        return buildResponseEntity(httpStatus, exc);
+    }
+    @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleException(InvalidDataException exc) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        List<String> errors = exc.getResult().getFieldErrors().stream().map(FieldError::getDefaultMessage)
+                .collect(Collectors.toList());
+        return buildResponseEntity(httpStatus, new RuntimeException("Dato enviado, inválido"), errors);
+    }
+    @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleException(MethodArgumentTypeMismatchException exc) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        // Aplica cuando en el URL se envia un argumento invalido, por ejemplo String
+        // por Integer
+        return buildResponseEntity(httpStatus, new RuntimeException("Tipo de Argumento, inválido"));
+    }
+    @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleException(Exception exc) {
+        HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        return buildResponseEntity(httpStatus, new RuntimeException("Se presentó un problema"));
+    }
+    private ResponseEntity<ErrorResponse> buildResponseEntity(HttpStatus httpStatus, Exception exc) {
+        return buildResponseEntity(httpStatus, exc, null);
+    }
+    private ResponseEntity<ErrorResponse> buildResponseEntity(HttpStatus httpStatus, Exception exc, List<String> errors) {
+        ErrorResponse error = new ErrorResponse(null);
+        error.setMessage(exc.getMessage());
+        error.setStatus(httpStatus.value());
+        error.setTimestamp(new Date());
+        error.setErrors(errors);
+        return new ResponseEntity<>(error, httpStatus);
+    }
+}
+```
+
+*En el controlador llamar al manejador de Excepciones*
+
+En el método (REST) se debe incluir como parámetro BindingResult y preguntar si hay errores
+
+Ruta: src/main/java/bo.gob.pge.rope/controller
+Archivo: DeptoController
+
+```java
+
+// ...
+@PostMapping
+@Operation(summary = "Adiciona datos en la tabla 'Deptos'", description = "Adiciona un registro en la Tabla 'Deptos'")
+public Depto createDepto(@Valid @RequestBody Depto depto, BindingResult result) {
+    if(result.hasErrors()) {
+        throw new InvalidDataException(result);
+    }
+    return deptoService.createDepto(depto);
+}
+// ...
+
+```
+
+## Métodos de Consulta JPA (Query Method)
+
+
+
+
+## Objeto de Transferencia de Datos (DTO)
 

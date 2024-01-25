@@ -625,3 +625,31 @@ Para saber cómo usar gotop, solo hay que pulsar “?” dentro de la TUI de la 
 
 Q para salir
 
+## Instalar Postman
+
+Instalacion Directa de Postman
+
+```sh
+sudo rm /etc/apt/preferences.d/nosnap.pref
+sudo apt update
+sudo apt install snapd
+sudo snap install postman
+```
+Nota: reiniciar sistema para ver icono de acceso directo de postman
+
+```sh
+shutdown -r now
+```
+
+Instalar descargando el archivo binario de Postman
+Descargar el archiv .tar.gz del sitio [Postman](https://www.postman.com/downloads/)
+
+Instalar Postman
+
+```sh
+sudo tar -xzvf postman-linux-x64.tar.gz -C /opt 
+sudo ln -s /opt/Postman/Postman /usr/bin/postman
+postman
+```
+Reiniciar sistema
+
