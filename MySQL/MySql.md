@@ -149,7 +149,7 @@ donde:
 
 *Crear una Base de Datos*
 
-        CREATE DATABSE nombre_base_de_datos;
+        CREATE DATABASE nombre_base_de_datos;
 
         Ej.
 

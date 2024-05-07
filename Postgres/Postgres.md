@@ -172,6 +172,49 @@ SELECT “to” FROM table;
   
 # Salir del cliente psql
 \q
+```
 
+# Desinstalar postgres
 
+```sh
+brew uninstall postgres
+rm -rf /usr/local/var/postgres
+rm /usr/local/var/log/postgres.log
+rm -f ~/.psqlrc ~/.psql_history
+
+brew remove postgresql
+brew list --formula | grep -e postgres -e psql
+
+```
+
+Or
+
+```sh
+# check version
+postgres --version
+    postgres (PostgreSQL) 13.3
+
+# locate where it is installed
+which psql
+    /Library/PostgreSQL/13/bin/psql
+
+# change directory$ cd /Library/PostgreSQL/13
+open uninstall-postgres.app
+
+#remove Postgres related files
+# change to home directory
+cd ~
+sudo rm -rf /Library/PostgreSQL
+sudo rm /etc/postgres-reg.ini
+# or
+sudo rm -rf /usr/local/opt/postgresql@14
+sudo rm /etc/postgres-reg.ini
+brew remove postgresql
+brew list --formula | grep -e postgres -e psql
+
+# some people also suggested to remove sysctl.conf
+# but I don't seem to have this file in my environment
+# so I ignored it. You can try if you'd like
+sudo rm /etc/sysctl.confrm
+    /etc/sysctl.conf: No such file or directory
 ```

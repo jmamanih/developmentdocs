@@ -42,7 +42,7 @@ git --version
 
 ### Actualización de git en Mojave MacOs
 
-```
+```sh
 xcode-select --install
 brew install git
 brew upgrade git
@@ -69,7 +69,7 @@ git --version
 
 <a id="idsec20">
 
-## Repositorios Remotos de GIT
+## Repositorios Remotos
 
 * [Github](https://github.com/)
 * [Sign in gitlab.com](https://gitlab.com/users/sign_in)
@@ -106,7 +106,7 @@ Nos situamos en la carpeta en la que queremos trabajar. Nos aseguramos con pwd, 
 
 Ahora con git init y el nombre del proyecto, creamos un nuevo proyecto:
 
-    git init prueba01
+    git init 
 
 
 ### Trabajar en un proyecto existente con Git

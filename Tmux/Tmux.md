@@ -90,6 +90,22 @@ tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} #{?battery_stat
 brew install reattach-to-user-namespace
 ```
 
+## Habilitar el mouse en los paneles de tmux
+
+Editar el archivo tmux.con
+```sh
+nvim ~/.tmux.conf
+```
+```sh
+setw -g mouse on
+```
+Habilitar Clipboard (copiar y pegar) 
+```
+Abrir iTerm2
+Menu: iTerm2, Preferences, Selection
+Check On: Aplications in terminal may access clipboard
+```
+
 # Tmux concepts
 [Tutorial Tmux](https://www.youtube.com/watch?v=vwRxelWEuFE)
 
@@ -183,6 +199,7 @@ tmux kill-session -t name_session
 * Mover panel a la izquierda: *Ctrl+b {*
 * Mover panel a la derecha: *Ctrl+b }*
 * Cerrar panel: *Ctrl+b x*
+* Activar el Mouse para cambiar entre paneles y mover *Ctrl+b : setw -g mouse on*
 
 
 # Tmux Miscelania

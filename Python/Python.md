@@ -97,3 +97,12 @@ Tutorial baico Python
 
 https://j2logo.com/
 
+*Instalar Spyder IDE para python*
+
+https://www.spyder-ide.org/
+
+
+adicionar terminal al IDE Spider
+```
+pip install spyder-terminal
+```

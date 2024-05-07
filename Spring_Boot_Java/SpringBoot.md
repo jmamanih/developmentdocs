@@ -420,7 +420,7 @@ public class DeptoController {
 
 }
 ```
-## Comprobar las APIS
+## Comprobar las APIS con POSTMAN
 
 Instalar Postman 
 
