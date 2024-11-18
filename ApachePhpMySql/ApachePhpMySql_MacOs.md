@@ -241,5 +241,72 @@ RewriteRule .*\.(jpg|jpeg|gif|png|bmp|zip)$ - [F,NC]
 * F forbidden
 devuelve a la petición un mensaje de acceso denegado "403 Forbidden".
 
+## Eliminar httpd
 
+* Verificar si Apache HTTP Server Está Instalado
 
+Verificar con el Comando which: Ejecuta el siguiente comando en la Terminal para ver si Apache está instalado y su ubicación:
+
+    which httpd
+
+Si está instalado, generalmente mostrará una ruta como /usr/sbin/httpd o similar.
+
+Verificar el Servicio de Apache: También puedes verificar si Apache está en ejecución comprobando los procesos:
+
+    ps aux | grep httpd
+
+Si ves procesos relacionados con httpd, entonces Apache está en ejecución.
+
+* Detener Apache
+
+Si Apache está en ejecución, primero necesitas detener el servicio. Esto se puede hacer de la siguiente manera:
+
+Detener Apache:
+
+En macOS, Apache puede estar gestionado por launchctl. Detén el servicio usando:
+
+    sudo apachectl stop
+
+O desactívalo para que no se inicie automáticamente:
+
+    sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist
+
+* Desinstalar Apache
+
+Apache HTTP Server viene preinstalado en macOS como parte del sistema operativo, por lo que no se puede desinstalar completamente como lo harías con un software de terceros. Sin embargo, puedes desactivar su uso y eliminar cualquier instalación adicional que hayas realizado con Homebrew.
+
+Si Apache fue Instalado con Homebrew:
+
+Desinstalar Apache Instalado con Homebrew:
+
+Si instalaste Apache mediante Homebrew, desinstálalo con:
+
+    brew uninstall httpd
+
+Eliminar Archivos de Configuración Residuales:
+
+    sudo rm -rf /usr/local/etc/httpd
+    sudo rm -rf /usr/local/var/log/httpd
+    sudo rm -rf /usr/local/var/run/httpd
+
+Si Apache es la Versión Preinstalada del Sistema:
+
+No puedes eliminar completamente Apache ya que es parte del sistema operativo, pero puedes asegurarte de que no se ejecute ni se inicie automáticamente. También puedes desactivar su inicio automático y configurarlo para que no interfiera:
+
+Desactivar el Inicio Automático de Apache:
+
+    sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist
+
+* Verificar la Desinstalación o Desactivación
+
+Para verificar que Apache ha sido desinstalado o desactivado correctamente, revisa si httpd todavía está accesible y si hay procesos activos:
+
+Verificar de Nuevo:
+
+    which httpd
+
+Si Apache fue instalado con Homebrew y desinstalado, no debería mostrar nada. Si es la versión del sistema, seguirá mostrando /usr/sbin/httpd.
+
+Comprobar Procesos Activos:
+
+    ps aux | grep httpd

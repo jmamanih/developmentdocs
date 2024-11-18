@@ -29,14 +29,6 @@ docker run -d -p 80:80 nginx
 Una imagen de Docker es un paquete de software que contiene todo lo necesario para ejecutar una aplicación, incluyendo el código, las bibliotecas y las dependencias. Las imágenes de Docker son como plantillas que se utilizan para crear contenedores de Docker. Una vez que se ha creado una imagen de Docker, se puede utilizar para crear múltiples contenedores que ejecuten la misma aplicación.
 
 
-
-tutorial
-https://www.youtube.com/watch?v=9eTVZwMZJsA
-
-
-https://www.youtube.com/watch?v=6idFknRIOp4
-
-
 ## Instalar Postgres en Docker
 
 ```sh
@@ -112,6 +104,45 @@ docker cp ~/Documents/Docker/Prac2/data.sql pg-agenda:/home/sqlfiles
 
 Nota: cuando no se usa el parametro -d se puede usar
       Ctrl+C para detener la ejecución de un contenedor
+
+## Instalar postgres 9.6 y restaurar base de datos
+```sh
+# Instalar imagen
+docker pull postgres:9.6
+# Crear volumen para administrar bases de datos postgres
+mkdir pg-easba-volume
+# Crear el contenedor con definición de usuarios
+docker run --name pg-easba -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:9.6
+# Verificar la versión de la base de datos
+docker exec -it pg-easba bash
+postgres --version
+# Conectar remotamente desde un cliente
+Abrir DBEaver:
+    Conected by: Host
+    Host: localhost
+    Database: postgres
+    Usuario: dev
+    Contraseña: dev
+# Restaurar Base de Datos
+    # Crear una carpeta de archivos SQL
+    docker exec -it pg-easba bash
+    cd /home
+    mkdir sqlfiles
+    exit
+    # Copiar archivos de consulta al contenedor
+    docker cp ~/Documents/MAESTRIA_CIENCIA_DE_DATOS/Mineria_de_Datos_2/Database_Easba_2016/easbadb.sql pg-easba:/home/sqlfiles
+    # Ingresar con el usuario de postgres
+    docker exec -it pg-easba bash
+    psql -U postgres
+    # Crear base de datos
+    create database easbadb;
+    # Seleccionar Base de Datos
+    \c easbadb;
+    # Ejecutar el archivo .sql
+    \i /home/sqlfiles/easbadb.sql
+    # Listar Tablas
+    \dt
+```
 
 ## Instalar MongoDB en Docker
 
@@ -235,8 +266,7 @@ docker pull mysql
 # Levantar contenedor de MariaDB
 docker run --name mariadb --env MARIADB_ROOT_PASSWORD=2687126 -v ~/Documents/Docker/Volumenes/mariadb-volume:/var/lib/mysql -p 3306:3306 -d mariadb:latest
 # Levantar contenedor en MySQL
-docker run --name mysqldb --env MYSQL_ROOT_PASSWORD=2687126 -e MYSQL_USER=developer -e MYSQL_PASSWORD=developer -e MYSQL_DATABASE=mcd_db -v ~/Documents/Docker/Volumenes/mysql-volume:/var/lib/mysql -p 3306:3306 -d mysql
-# En el caso de mysql no es necesario crear usuario, contraseña y base de datos porque se esta declarando en las variables de entorno
+docker run --name mysqldb --env MYSQL_ROOT_PASSWORD=2687126 -v ~/Documents/Docker/Volumenes/mysql-volume:/var/lib/mysql -d -p 3306:3306 mysql 
 
 # Ingresar al command line
 docker exec -it mariadb bash
@@ -267,15 +297,66 @@ docker exec -it mysqldb bash
     select current_user();
     # Seleccionar base de datos
     use mcd_db;
+    # Crear una tabla
+    CREATE TABLE juan_innodb (
+      id  INT4 AUTO_INCREMENT PRIMARY KEY,
+      data VARCHAR(100)
+    ) ENGINE = INNODB;
+    # Insertar Datos
+    INSERT INTO foo_innodb (data) VALUES ('bmw');
+    INSERT INTO foo_innodb (data) VALUES ('toyota');
+    INSERT INTO foo_innodb (data) VALUES ('ford');
     # Listar todas la tablas;
     show tables;
     # Mostrar columnas de una tabla
     show columns from table_name; 
+    describe table_name;
+    # Bloqueo a nivel de fila
+    # Inicial transacción
+    star transactions;
+    select * from foo_innodb;
+    update foo_innodb set data = 'nissan' where id = 1;
+    # Cerrar transacción
+    commit; 
+    #rollback;
+
+    # limpiar pantalla
+    Ctrl + l
     # salir 
     exit
 ```
 
-Conectar un cliente DBeaver:
+## Instalar paquetes en el contenedor de MySQL
+
+```sh
+# copiar la base de datos al contenedor
+docker cp ~/Downloads/employees_db.zip mysqlsdb:/home
+
+# ingresar al contenedor
+docker exec -it mysqldb bash
+
+# instalar paquetes
+microdnf install -y vim
+microdnf install -y yum
+yum update
+yum install unzip
+
+# descomprimir la base de datos
+cd /home
+unzip employees_db.zip
+cd employees_db
+
+# cargar la base de datos
+mysql -u root -p < employees.sql
+
+# ingresar como usuario root a mysql
+mysql -u root -p
+
+# hacer un listado de las bases de datos
+show databases;
+
+```
+## Conectar un cliente SQL (DBeaver) a Mysql
 
 Crear una nueva conexión:
 
@@ -288,9 +369,47 @@ Crear una nueva conexión:
     Driver properties:
         allowPublicKeyRetrieval      true
 
+## Instalar Laravel 11 en Docker
 
+Ingresar a [Docker Hub](https://hub.docker.com/)
+Buscar Laravel
+Ingresar a bitnami/Laravel
+
+```sh
+# Instalar imagen de Laravel 11
+docker pull bitnami/laravel
+# Instalar imagen de mysql
+docker pull mariadb:latest
+# Instalar una red privada
+docker network create laravel-network
+# Ejecutar el contenedor mysql
+docker run --name mariadb \
+--env MARIADB_ROOT_PASSWORD=2687126 \
+--env MARIADB_DATABASE=tramitesdb \
+--network laravel-network \
+--volume ~/Documents/Docker/Volumenes/mariadb:/var/lib/mysql \
+-d -p 3306:3306 mariadb
+# Ejecutar el contenedor de Laravel
+docker run -d --name laravel \
+--env DB_HOST=mariadb \
+--env DB_PORT=3306 \
+--env DB_USERNAME=root \
+--env DB_PASSWORD=2687126 \
+--env DB_DATABASE=tramitesdb \
+--network laravel-network \
+--volume ~/Documents/Docker/Volumenes/laravel/sistram:/app \
+-d -p 8000:8000 bitnami/laravel:latest
+```
+*Ejecutar comandos Laravel*
+
+```sh
+docker exec laravel php -v  
+docker exec laravel php artisan list    
+```
+
+## ------------------------------------------
 ## COMANDOS DOCKER
-
+## ------------------------------------------
 ```sh
 # Construye una imagen a partir de un Dockerfile en el directorio actual
 docker build
@@ -335,6 +454,7 @@ docker inspect image
 
 # Iniciar un contenedor detenido
 docker start container
+docker start -a container
 
 # Detener un contenedor
 docker stop container
@@ -421,8 +541,8 @@ La ubicación de almacenamiento de imágenes y contenedores de Docker
     MacOS: ~/Library/Containers/com.docker.docker/Data/vms/0/
 
 
-# Practica.
-# Implementar un servidor de alta disponibilidad con apache que tenga un balanceador de carga
+# Ejemplos:
+## Implementar un servidor de alta disponibilidad con apache que tenga un balanceador de carga
 
 ```sh
 # Crear un directorio para compartir archivos con los contenedores
@@ -501,3 +621,116 @@ docker run -v ~/Documents/Docker/Prac1/nginx.conf:/etc/nginx/nginx.conf -d -p 80
 # hacer el testeo con:
 localhost:8084
 ```
+
+Se tiene la siguiente estructura de tablas y campos:
+
+Tablas:
+departments         
+dept_emp            
+dept_manager        
+employees           
+employees_hash      
+salaries            
+titles 
+
+Descripcion de campos:
+
+employees:
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| emp_no     | int           | NO   | PRI | NULL    |       |
+| birth_date | date          | NO   |     | NULL    |       |
+| first_name | varchar(14)   | NO   |     | NULL    |       |
+| last_name  | varchar(16)   | NO   |     | NULL    |       |
+| gender     | enum('M','F') | NO   |     | NULL    |       |
+| hire_date  | date          | NO   |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+
+departments:
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| dept_no   | char(4)     | NO   | PRI | NULL    |       |
+| dept_name | varchar(40) | NO   | UNI | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+salaries:
++-----------+------+------+-----+---------+-------+
+| Field     | Type | Null | Key | Default | Extra |
++-----------+------+------+-----+---------+-------+
+| emp_no    | int  | NO   | PRI | NULL    |       |
+| salary    | int  | NO   |     | NULL    |       |
+| from_date | date | NO   | PRI | NULL    |       |
+| to_date   | date | NO   |     | NULL    |       |
++-----------+------+------+-----+---------+-------+
+
+titles:
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| emp_no    | int         | NO   | PRI | NULL    |       |
+| title     | varchar(50) | NO   | PRI | NULL    |       |
+| from_date | date        | NO   | PRI | NULL    |       |
+| to_date   | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+dept_emp:
++-----------+---------+------+-----+---------+-------+
+| Field     | Type    | Null | Key | Default | Extra |
++-----------+---------+------+-----+---------+-------+
+| emp_no    | int     | NO   | PRI | NULL    |       |
+| dept_no   | char(4) | NO   | PRI | NULL    |       |
+| from_date | date    | NO   |     | NULL    |       |
+| to_date   | date    | NO   |     | NULL    |       |
++-----------+---------+------+-----+---------+-------+
+
+dept_manager;
++-----------+---------+------+-----+---------+-------+
+| Field     | Type    | Null | Key | Default | Extra |
++-----------+---------+------+-----+---------+-------+
+| dept_no   | char(4) | NO   | PRI | NULL    |       |
+| emp_no    | int     | NO   | PRI | NULL    |       |
+| from_date | date    | NO   |     | NULL    |       |
+| to_date   | date    | NO   |     | NULL    |       |
++-----------+---------+------+-----+---------+-------+
+
+Realizar en SQL para MySQL lo siguiente:
+
+1. Sobre la tabla employees, cree un indice por apellido, nombre y fecha de nacimiento.
+2. Proporcione un ejemplo de consulta que utilice un índice prefijo.
+3. Proporcione un ejemplo de consulta que saque los datos del índice y no de la BBDD.
+4. Proporcione un ejemplo donde se retorne apellido, nombre y fecha de nacimiento, se realice ordenamiento (ORDER BY) por dos de estas columnas y el motor tenga que realizar ordenamiento 'Using filesort'
+
+Aquí tienes cómo realizar las acciones solicitadas en SQL para MySQL:
+
+    Para crear un índice por apellido, nombre y fecha de nacimiento en la tabla "employees", puedes usar la siguiente sentencia:
+
+sql
+
+CREATE INDEX idx_lastname_firstname_birthdate ON employees (last_name, first_name, birth_date);
+
+    Un ejemplo de consulta que utilice un índice prefijo sería una consulta que utilice una condición en la que se especifique un prefijo para la columna indexada. Por ejemplo:
+
+sql
+
+SELECT * FROM employees WHERE last_name LIKE 'Smi%';
+
+    Un ejemplo de consulta que saque los datos del índice y no de la base de datos sería una consulta que utilice solamente las columnas incluidas en el índice. Por ejemplo:
+
+sql
+
+SELECT last_name, first_name, birth_date FROM employees WHERE last_name LIKE 'Smi%';
+
+    Para proporcionar un ejemplo donde se retorne apellido, nombre y fecha de nacimiento, se realice ordenamiento por dos de estas columnas y el motor tenga que realizar ordenamiento 'Using filesort', podrías hacer lo siguiente:
+
+sql
+
+SELECT last_name, first_name, birth_date
+FROM employees
+ORDER BY last_name, birth_date;
+
+En este ejemplo, el motor MySQL tendría que realizar un ordenamiento adicional (Using filesort) para ordenar primero por apellido y luego por fecha de nacimiento.
+
+
+en el caso de los prefijos se puede crear una nueva columna

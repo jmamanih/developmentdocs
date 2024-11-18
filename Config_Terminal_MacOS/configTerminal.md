@@ -6,6 +6,13 @@ Tutorial: [Configuration Terminal Oh My Zsh](https://medium.freecodecamp.org/how
 
 Tutorial [Powerlevel9k](https://omrobbie.com/iterm2-oh-my-zsh-powerlevel9k-nerd-fonts-dimmed-monokai/)
 
+## Oh My Posh
+
+Configurar Terminal Personalizado para Windows
+
+https://www.youtube.com/watch?v=84e2R5nMLo8
+
+
 ## Install Homebrew
 
 Install the CLI tools for Xcode.

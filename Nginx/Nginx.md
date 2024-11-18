@@ -179,3 +179,47 @@ Comprobar configuración
 
 
 [Ir al Inicio](#topmenu "Ir al inicio de la página")
+
+## Desinstalar Nginx
+
+* Verificar si Nginx Está Instalado
+
+Verificar con el Comando which: Puedes comprobar si Nginx está instalado ejecutando el siguiente comando en la Terminal:
+
+    which nginx
+
+Si Nginx está instalado, este comando mostrará la ruta de instalación, generalmente algo como /usr/local/bin/nginx. Si no se muestra nada, Nginx no está instalado o no está en el PATH.
+
+Verificar el Servicio de Nginx: Otra forma de verificar es buscar si hay procesos de Nginx en ejecución:
+
+    ps aux | grep nginx
+
+Si se ve procesos relacionados con Nginx, entonces está en ejecución en tu sistema.
+
+* Desinstalar Nginx
+
+Si Nginx está instalado y deseas desinstalarlo, sigue los pasos correspondientes según la forma en que fue instalado.
+Desinstalar Nginx Instalado con Homebrew:
+
+Detener Nginx: Si Nginx está en ejecución, deténlo primero:
+
+    sudo brew services stop nginx
+
+Desinstalar Nginx: Utiliza Homebrew para desinstalar Nginx:
+
+    brew uninstall nginx
+
+Eliminar Archivos Residuales: Homebrew normalmente limpia la mayoría de los archivos, pero puedes asegurarte eliminando cualquier archivo residual:
+
+    sudo rm -rf /usr/local/etc/nginx
+    sudo rm -rf /usr/local/var/log/nginx
+    sudo rm -rf /usr/local/var/run/nginx
+
+* Verificar la Desinstalación
+
+Para confirmar que Nginx ha sido completamente desinstalado, ejecuta nuevamente:
+
+    which nginx
+
+Si no se muestra ninguna ruta, y ps aux | grep nginx no devuelve procesos activos, la desinstalación ha sido exitosa.
+

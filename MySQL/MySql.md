@@ -262,5 +262,75 @@ donde:
 *Mostrar columnas de una tabla*
 
         show columns from table_name;
+        
+        describe table_name;
 
 [Ir al Inicio](#topmenu "Ir al inicio de la página")
+
+## Desinstalación de mysql en MacOs
+
+Para desinstalar MySQL en macOS, sigue estos pasos:
+*1: Detener el Servicio de MySQL*
+
+Primero, asegúrate de que MySQL no esté en ejecución. Puedes detener el servicio utilizando el siguiente comando en la Terminal:
+
+```
+sudo launchctl unload -w /Library/LaunchDaemons/com.oracle.oss.mysql.mysqld.plist
+```
+*2: Eliminar los Archivos y Directorios de MySQL*
+
+Ejecuta los siguientes comandos en la Terminal para eliminar todos los archivos y directorios asociados con MySQL:
+
+```
+sudo rm -rf /usr/local/mysql
+sudo rm -rf /usr/local/'mysql-*'  # Elimina versiones específicas si existen.
+sudo rm -rf /usr/local/var/mysql
+sudo rm -rf /Library/StartupItems/MySQLCOM
+sudo rm -rf /Library/PreferencePanes/'My*'
+```
+
+Eliminar la configuración del sistema:
+
+```
+sudo rm -rf /Library/LaunchDaemons/com.oracle.oss.mysql.mysqld.plist
+```
+
+Eliminar los archivos de preferencias:
+
+```
+sudo rm -rf ~/Library/Preferences/com.oracle.oss.mysql.mysqld.plist
+```
+
+Eliminar enlaces simbólicos:
+
+```
+sudo rm -rf /usr/local/bin/'mysql*'
+```
+
+*3: Eliminar el Usuario y Grupo MySQL (Opcional)*
+
+Si MySQL creó un usuario o grupo específico en tu sistema, puedes eliminarlos con los siguientes comandos:
+
+```
+sudo dscl . -delete /Users/_mysql
+sudo dscl . -delete /Groups/_mysql
+```
+
+*4: Limpiar Cache y Preferencias (Opcional)*
+
+Si MySQL creó archivos de caché o preferencias adicionales, también puedes eliminarlos. Asegúrate de revisar y eliminar solo los archivos relacionados con MySQL:
+
+```
+sudo rm -rf ~/Library/Preferences/com.mysql.*
+```
+
+*Verificación*
+
+Para asegurarte de que MySQL está completamente desinstalado, puedes verificar si existen archivos relacionados usando:
+
+```
+which mysql
+```
+
+Si no se muestra ninguna ruta, significa que MySQL ha sido completamente eliminado.
+

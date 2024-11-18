@@ -38,7 +38,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 nvm install node
 npm install -g npm
 ```
-4. Crean proyecto mediante Composer
+4. Crear proyecto mediante Composer
 ```sh
 composer require laravel/laravel nombreApp
 ```

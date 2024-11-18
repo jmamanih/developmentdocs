@@ -98,14 +98,6 @@ Tambien verificar si esta instalado la Base de Datos
 mysql --version
 ```
 
-
-
-
-
-
-
-
-
 ## HTTP Status Codes and the Response Format
 
 We’ve also added the response()->json() call to our endpoints. This lets us explicitly return JSON data as well as send an HTTP code that can be parsed by the client. The most common codes you’ll be returning will be:
