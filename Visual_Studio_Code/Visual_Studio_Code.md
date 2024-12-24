@@ -4,35 +4,8 @@
 
 [Download Visual Studio Code](https://code.visualstudio.com/)
 
-## Essential Plugins
 
-Open Visual Studio Code, Left Menu Extensions, Typing plugins-name in search box, Click button Install
-
-PLUGINS: 
-
-1. Path Intellicense
-2. Markdown Github Preview Styling
-3. Color Highlight
-4. Babel ES6/ES7
-5. File Icons
-
-    File > Preferences > File Icon Theme
-    
-6. TODO Highlight
-7. Prettier Now 
-   CMD + Shift + P -> Format Document
-8. Auto-Open Markdown
-   Ctrl + K V  ó  ⌘ + K V
-
-### Install Icon Themes
-
-File > Preferences > Icon Theme > Install Icon Themes, select icons
-
-### Install Color Themes
-
-File > Preferences > Color Theme > Install Color Themes, select theme
-
-### Opening Visual Studio Code from Command Line
+## Opening Visual Studio Code from Command Line
 
 ```sh
 touch ~/.bash_profile
@@ -56,12 +29,6 @@ Testing
 code .
 ```
 
-### Zoom Editor
-
-```
-    Cmd +               Zoom In
-    Cmd -               Zoom Out
-```
 
 ## Configurar Font para la terminal con ZSH
 
@@ -74,23 +41,42 @@ code .
 
 - Guardar, y se veran los cambios
 
-## Extensiones para Temas
-
-- Material Theme
-- Material Theme Icons
-
-    Elegir Commmunity Material Theme
-
 ## Extensiones por Default
 - Material Theme Free
 - Material Them Icons
 - Markdown Editor
 - Markdown Preview
+    Ctrl + K V  ó  ⌘ + K V
 - Path Intellisense
 - Path Autocomplete
 - PlantUML
 - Prettier - Code formatter
+    CMD + Shift + P -> Format Document
 - Print
+- Highlight CSV and TSV files, Run SQL-like queries
+- TODO Highlight
+
+## Select Icon Themes
+
+File > Preferences > Icon Theme > Install Icon Themes, select icons
+
+## Select Color Themes
+
+File > Preferences > Color Theme > Install Color Themes, select theme
+
+## Zoom Editor
+
+```
+    Cmd +               Zoom In
+    Cmd -               Zoom Out
+```
+## Compartir Extensión con todos los Perfiles
+
+        Clic derecho sobre la extensión, ó clic sobre icono Adminstrar de la extensión y elegir "Aplicar extensión a todos los perfiles"
+
+## Crear perfiles de desarrollo
+
+        Clic sobre icono Administrar, Perfil, Perfiles, Nuevo Perfil
 
 ## Extensiones para Perfíl de Python Developer
 
@@ -108,10 +94,48 @@ code .
 
 Ejegir version de python (Crear un archivo .py, clic versión - ventana inferior izquierda, seleccionar interprete python)
 
+## Extensiones para Perfíl de React JS developer
+
+- ES7 + React/Redux/React-Native snippets
+
 
 ## Crear Perfil para Spring Boot Developer Java
 
 
-
 https://www.youtube.com/watch?v=cQfBenvXkRw
 
+
+## Crear un entorno virtual de Python desde la terminal de Visual Studio Code
+
+    # 1. Crear entorno virtual (si no existe)
+    python -m venv venv
+
+    # 2. Activar el entorno virtual
+    # En Windows:
+    # venv\Scripts\activate
+    # En macOS/Linux:
+    source venv/bin/activate
+
+    # 3. Actualizar pip
+    pip install --upgrade pip
+
+    # 4. Instalar librerias por ejemplo: numpy 
+    pip install numpy
+
+    # 5. Ejecutar aplicación
+    python main.py
+
+## Ejecutar un programa Python en un entorno virtual con Visual Studio Code
+
+    Cmd + Shift + P 
+    Escribir "Python: Create Environment" y seleccionar la opción que aparece
+    Seleccionar "Venv: Creates a '. venv' 
+    Seleccionar la versión de Python a utilizar en el entorno virtual
+    VS Code creará el entorno virtual y lo configurará automáticamente para el proyecto
+
+## Elegir un entorno virtual con Visual Studio Code
+
+    Cmd + P
+        > Python Select Interpreter
+            Select de workspace folder to set the interpreter (seleccionar la carpeta del proyecto)
+                Seleccionar interprete ( elegir python del area de trabajo)

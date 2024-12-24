@@ -173,26 +173,6 @@ Desactivar entorno virtual
 
     deactivate
 
-Crear un entorno virtual desde la terminal de Visual Studio Code
-
-    # 1. Crear entorno virtual (si no existe)
-    python -m venv .venv
-
-    # 2. Activar el entorno virtual
-    # En Windows:
-    # .venv\Scripts\activate
-    # En macOS/Linux:
-    source .venv/bin/activate
-
-    # 3. Actualizar pip
-    pip install --upgrade pip
-
-    # 4. Instalar librerias por ejemplo: numpy 
-    pip install numpy
-
-    # 5. Ejecutar aplicación
-    python main.py
-
 Comando para mostrar el entorno virtual activo
 
     echo $VIRTUAL_ENV 
@@ -212,7 +192,27 @@ Si ya no se necesita el virtualenv, se puede eliminar simplemente borrando la ca
     deactivate
     rm -rf venv
 
-Ejecutar un programa Python en un entorno virtual con Visual Studio
+## Crear un entorno virtual desde la terminal de Visual Studio Code
+
+    # 1. Crear entorno virtual (si no existe)
+    python -m venv venv
+
+    # 2. Activar el entorno virtual
+    # En Windows:
+    # venv\Scripts\activate
+    # En macOS/Linux:
+    source venv/bin/activate
+
+    # 3. Actualizar pip
+    pip install --upgrade pip
+
+    # 4. Instalar librerias por ejemplo: numpy 
+    pip install numpy
+
+    # 5. Ejecutar aplicación
+    python main.py
+
+## Ejecutar un programa Python en un entorno virtual con Visual Studio Code
 
     Cmd + Shift + P 
     Escribir "Python: Create Environment" y seleccionar la opción que aparece
@@ -220,7 +220,30 @@ Ejecutar un programa Python en un entorno virtual con Visual Studio
     Seleccionar la versión de Python a utilizar en el entorno virtual
     VS Code creará el entorno virtual y lo configurará automáticamente para el proyecto
 
+## Elegir un entorno virtual con Visual Studio Code
+
+    Cmd + P
+        > Python Select Interpreter
+            Select de workspace folder to set the interpreter (seleccionar la carpeta del proyecto)
+                Seleccionar interprete ( elegir python del area de trabajo)
+
+## Abrir Terminal Integrado al entorno virtual en Visual Studio Code
+
+    Cmd + P
+        > Terminal: Create New Terminal starting in a Custom Working Directory (seleccionar)
+
 **NOTA:** Para trabajar con entornos virtuales activar entorno virtual en el entorno VS Code y en su terminal
+
+## Compilar proyectos python desde Visual Studio Code
+
+    Abrir Visual Studio Code
+    Cmd + Shift + P
+    Python: Seleccionar Interprete
+    -> Elegir la version de python
+    ó
+    -> Seleccionar en el nivel de área de trabajo
+
+    python --version
 
 ## Mostrar estado de virtualenv en el prompt de zsh
 
@@ -236,18 +259,6 @@ Editar las las siguientes lineas
 Cerrar y volver a abrir terminal
 
     source ~/.zshrc
-
-## Compilar proyectos python desde Visual Studio Code
-
-    Abrir Visual Studio Code
-    Cmd + Shift + P
-    Python: Seleccionar Interprete
-    -> Elegir la version de python
-    ó
-    -> Seleccionar en el nivel de área de trabajo
-
-    python --version
-    
 
 ## Instalar Jupyter Notebook (opcional)
 
