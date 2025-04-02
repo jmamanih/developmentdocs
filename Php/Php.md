@@ -12,28 +12,63 @@ PHP originalmente significaba Personal Home Page (Página personal), pero ahora 
 
 ## Instalaciones previas
 
-* [Git](/Git/Git.md)
+Instalar Homebrew, y si no está instalado ejecutar:
 
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Verificar que este correctamente configurado
+
+```bash
+brew --version
+```
 
 ## Instalación de php en MacOs
 
-* Asegurarse de haber instalado Homebrew
+* Asegurarse de haber instalado Homebrew y Actualizar
 ```sh
-  brew -v
-  brew update
+brew -v
+brew update
 ```
 * Instalar php
 
+Instala la última versión estable de PHP con:
+
 ```sh
-  brew install php
+brew install php
 ```
-* Verificar la version de php
-```sh
-  php - v
+Si se necesita una versión específica de php (por ejemplo, PHP 8.1 o 7.4):
+
+```bash
+brew install php@8.1
+brew install php@7.4
 ```
-* Actualizar la versión de php
+* Configurar PHP:
+
+Añadir PHP al PATH. 
+
+```bash
+echo 'export PATH="/usr/local/opt/php/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+* Verificar la instalación y la version de php
 ```sh
-  brew upgrade php
+php - v
+```
+
+* Actualizar la versión de php a la ultima versión estable
+```sh
+brew upgrade php
+```
+
+## Configurar un servidor PHP (opcional)
+
+Si se desea ejecutar un servidor PHP embebido para desarrollo, se puede iniciar con:
+
+```bash
+php -S localhost:8000
 ```
 
 ## Desinstalación de php en MacOs

@@ -6,7 +6,7 @@ Composer es una herramienta para la gestión de dependencias en PHP. Permite dec
 
 Sitio Oficial de [COMPOSER](https://getcomposer.org/download/)
 
-## Instalación
+## Instalación de Composer en MacOs
 
 ```sh
 mkdir SetupComposer
@@ -22,13 +22,43 @@ ls -l
 php composer.phar
 
 ```
-## Configuracion Global en MacOs
+
+### Configuracion Global en MacOs
 
 ```sh
 sudo mv composer.phar /usr/local/bin/composer
 ```
-## Verificar la instalación de Composer
+### Verificar la instalación de Composer
 
 ```sh
+composer --version
+```
+
+## Reinstalar o Actualizar Composer
+
+Crear un directorio de instalacion:
+
+```bash
+mkdir setupComposer
+cd setupComposer
+```
+
+Instalar Composer:
+
+```bash
+ php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+ php composer-setup.php
+ php -r "unlink('composer-setup.php');"
+```
+
+Usar Composer de forma global:
+
+```bash
+sudo mv composer.phar /usr/local/bin/composer
+```
+
+Verificar que Composer funcionar con un comando global:
+
+```bash
 composer --version
 ```

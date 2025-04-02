@@ -1,16 +1,6 @@
 
 # INSTALL NODEJS
 
-
-
-
-
-
-
-
-
-
-
 # BACKEND
 
 ## Install nvm
