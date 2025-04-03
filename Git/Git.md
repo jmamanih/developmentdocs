@@ -184,7 +184,7 @@ pwd
 mkdir .ssh
 ls
 ```
-* Nos movemos a ella y mediante el comando shh-keygen creamos una clave asociada a la cuenta de correo, vamos a emplear una clave tipo RSA, de modo que el comando quedaría:
+* Nos movemos a ella y mediante el comando ssh-keygen creamos una clave asociada a la cuenta de correo, vamos a emplear una clave tipo RSA, de modo que el comando quedaría:
 
     Generar SSK-Key para GITHUB
     ```sh
