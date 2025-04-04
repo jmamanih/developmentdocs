@@ -144,6 +144,75 @@ Abrir DBEaver:
     \dt
 ```
 
+## Contenedor Postgres en Windows
+
+*Instalar Docker Desktop*
+
+Si no está instalado Docker, descargar desde (Docker Desktop)[https://www.docker.com/products/docker-desktop/] y asegúrarse de que esté en modo WSL 2 o Hyper-V.
+
+Verificar el modo de ejecución:
+    
+    Verificar en Docker Desktop
+        Abre Docker Desktop.
+        Ve a Settings > General.
+        Si ves la opción "Use the WSL 2 based engine" activada, entonces estás en WSL 2.
+        Si no está activada, Docker está corriendo con Hyper-V.
+
+*Ejecutar el contenedor con volumen*
+
+Abrir CMD
+
+```sh
+    docker pull postgres
+
+    docker run --name pg_senasag -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v F:\DOCKER_VOLUME\postgres_senasag:/var/lib/postgresql/data -d postgres:latest
+```
+Conectar con una base de datos especifica
+
+```sh
+    docker run --name pg_senasag -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=senasagdb -p 5432:5432 -v F:\DOCKER_VOLUME\postgres_senasag:/var/lib/postgresql/data -d postgres:latest
+```
+
+Verificar que el contenedor está corriendo
+
+```sh
+    docker ps
+```
+
+Inngresar al shell de postgres
+
+```sh
+    docker exec -it pg_senasag psql -U postgres
+    docker exec -it pg_senasag psql -U postgres -d senasagdb
+```
+
+Conectarse a un cliente PostgreSQL
+
+Desde cualquier cliente, usa los siguientes datos:
+
+    Host: localhost
+    Puerto: 5432
+    Usuario: admin
+    Contraseña: admin
+    Base de datos: midb
+
+Errores de conexión de cliente DBEaver:
+
+    Maven artifact 'org.postgresql:postgresql:RELEASE' cannot be resolved in external repositoresMaven artifact 'org.postgresql:postgresql:RELEASE' cannot be resolved in external repositores DBEAVER
+
+Solución:
+
+    In my case I had to add the Maven index site url in DBeaver as follows:
+
+        Go to DbBeaver "Preferences" menu
+        Locate "Connections" -> "Drivers" -> "Maven"
+        Click "Add" and paste this link: https://mvnrepository.com
+        Click "Apply" and "Close"
+        On the driver settings menu that will appear, click "Download"
+
+    After the download has finished, I was able to connect to the database.
+
+
 ## Instalar MongoDB en Docker
 
 ```sh

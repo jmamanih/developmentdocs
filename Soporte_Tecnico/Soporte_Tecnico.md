@@ -45,3 +45,8 @@ presionar [0] Go back
 
 abrir cualquier programa de office 365
 
+*Deshabilitar Actualizaciones*
+
+Ejecutar: services.msc
+-> Buscar Windows Update, doble Clic, Deshabilitar, Aplicar
+
