@@ -1,6 +1,5 @@
 # CREAR UN ENTORNO DE DESARROLLO PARA LARAVEL Y ANGULAR EN WINDOWS 10
 
-
 Verificar si tienes WSL 2 habilitado
 
     wsl --list --verbose
@@ -23,7 +22,6 @@ Habilitar el modo desarrollador en Windows
 
 Habilitar Windows Subsysm Linux
 
-    
     Abrir el Panel de control, Programas
     Activar o desactivar las características de Windows
     En la misma ventana buscar la opción de Subsistema de Windows para Linux y seleccionar, Aceptar
@@ -37,5 +35,20 @@ Instalar y Configurar Ubuntu
 
         touch $HOME/.hushlogin
 
-# Configurar la terminal Power Shell con Oh My Posh
+
+## Instalar Laravel Herd
+
+Es la mejor opcion para trabajar en Windows se debe descargar el instalador de: [Laravel Herd](https://herd.laravel.com/windows)
+
+Al término de la Instalación, se instalan:
+
+    - php ultima version, se puede cambiar facilmente a otra version
+    - composer
+    - nodejs
+    - npm
+    - nvm
+    - nginx
+    . mysql
+
+
 

@@ -8,7 +8,7 @@ Tutorial [Powerlevel9k](https://omrobbie.com/iterm2-oh-my-zsh-powerlevel9k-nerd-
 
 ## Oh My Posh
 
-Configurar Terminal Personalizado para Windows
+Configurar Terminal Personalizado para Windows [Oh My Posh](../Config_Terminal/OhMyPoshWindows.md)
 
 https://www.youtube.com/watch?v=84e2R5nMLo8
 

@@ -55,6 +55,7 @@ code .
 - Print
 - Highlight CSV and TSV files, Run SQL-like queries
 - TODO Highlight
+- Terminal
 
 ## Select Icon Themes
 
@@ -98,6 +99,41 @@ Ejegir version de python (Crear un archivo .py, clic versión - ventana inferior
 
 - ES7 + React/Redux/React-Native snippets
 
+## Extensiones para Perfil de Laravel
+
+- Alpine.js IntelliSense
+- GitHub Copilot - Your AI peer programmer
+- Official Laravel VS Code Extension
+- Laravel goto view
+- Laravel Snippets
+- Php Intelephense
+
+## Extensiones para perfil de Angular
+
+- Angular Language Service
+- Angular Snippets (Version ..) 
+
+Esenciales para Angular
+
+    Angular Language Service – Ofrece autocompletado, sugerencias de código y detección de errores en archivos .ts, .html y .json de Angular.
+    Angular Snippets (Version 15) – Proporciona fragmentos de código predefinidos para Angular 15.
+
+Para TypeScript y JavaScript
+
+    ESLint – Ayuda a detectar errores y mejorar la calidad del código.
+    Prettier - Code formatter – Formateador de código compatible con Angular.
+
+Para HTML, CSS y SCSS
+
+    HTML CSS Support – Mejora el soporte de HTML y CSS en Angular templates.
+    Tailwind CSS IntelliSense (Si usas Tailwind CSS en tu proyecto) – Ofrece autocompletado y validación de clases de Tailwind.
+
+Para trabajar con archivos y terminal
+
+    Path Intellisense – Autocompletado de rutas en archivos.
+    Auto Rename Tag – Cambia automáticamente la etiqueta de cierre cuando editas una etiqueta de apertura en HTML.
+    Rainbow Brackets – Resalta y colorea pares de llaves {}, [], ().
+    GitLens – Mejora la integración con Git y muestra el historial de cambios en línea.
 
 ## Crear Perfil para Spring Boot Developer Java
 

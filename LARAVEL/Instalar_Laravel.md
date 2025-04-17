@@ -1,4 +1,4 @@
-# Laravel
+# Instalación de Laravel
 
 ![Laravel](images/laravel.png)
 
@@ -8,7 +8,7 @@ Laravel incluye herramientas que facilitan la construcción de aplicaciones web,
 
 ## Entornos de Desarrollo Laravel
 
-* Para Windows se tiene [LARAGON](https://laragon.org/).
+* Para Windows se tiene Laravel Herd, y [LARAGON](https://laragon.org/).
 * Para entornos Linux es recomendable usar [LARAVEL SAIL](https://laravel.com/docs/10.x/sail).
 * Para MACOS el mas recomendable es [LARAVEL HERD](https://herd.laravel.com/)
 
@@ -117,7 +117,6 @@ We’ve also added the response()->json() call to our endpoints. This lets us ex
 |   503     |   Service unavailable. Pretty self explanatory, but also another code that is not going to be returned explicitly by the application.
 
 
-
 ## Ejecutar un Proyecto Laravel
 
 Ejemplo: 
@@ -134,4 +133,30 @@ php artisan db:seed
 php artisan serve 
     start the app on http://localhost:8080/
 ```
+
+Error al levantar la aplicación si trabaja con Laravel Herd:
+
+    Failed to listen on 127.0.0.1:8000 (reason: ?)
+    Failed to listen on 127.0.0.1:8001 (reason: ?)
+    Failed to listen on 127.0.0.1:8002 (reason: ?)
+    Failed to listen on 127.0.0.1:8003 (reason: ?)
+    Failed to listen on 127.0.0.1:8004 (reason: ?)
+    Failed to listen on 127.0.0.1:8005 (reason: ?)
+    Failed to listen on 127.0.0.1:8006 (reason: ?)
+    Failed to listen on 127.0.0.1:8007 (reason: ?)
+    Failed to listen on 127.0.0.1:8008 (reason: ?)
+    Failed to listen on 127.0.0.1:8009 (reason: ?)
+    Failed to listen on 127.0.0.1:8010 (reason: ?)
+
+Solucion:
+
+    - Click derecho en el icono Laravel Herd (panel de iconos)
+    - Open Configuration Files, /bin, /phpv..
+    - Abrir el archivo php.ini, editar
+
+        variables_order = "GPCS"
+    
+    - Guardar el archivo y ejecutar nuevamente:
+    
+        php artisan serve
 
