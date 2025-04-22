@@ -28,6 +28,11 @@ docker run -d -p 80:80 nginx
 ¿Qué es una imagen de Docker?
 Una imagen de Docker es un paquete de software que contiene todo lo necesario para ejecutar una aplicación, incluyendo el código, las bibliotecas y las dependencias. Las imágenes de Docker son como plantillas que se utilizan para crear contenedores de Docker. Una vez que se ha creado una imagen de Docker, se puede utilizar para crear múltiples contenedores que ejecuten la misma aplicación.
 
+## Cambiar Fuente y tamaño de letra en Docker Desktop
+
+    Settings, General, Enable Docker Terminal
+        Fuente: Cascadia Code NF
+        Font Size: 12
 
 ## Instalar Postgres en Docker
 

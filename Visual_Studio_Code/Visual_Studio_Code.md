@@ -135,6 +135,10 @@ Para trabajar con archivos y terminal
     Rainbow Brackets – Resalta y colorea pares de llaves {}, [], ().
     GitLens – Mejora la integración con Git y muestra el historial de cambios en línea.
 
+## Extensiones para IA
+
+    - Cline (prev. Claude Dev) – #1 on OpenRouter
+
 ## Crear Perfil para Spring Boot Developer Java
 
 
