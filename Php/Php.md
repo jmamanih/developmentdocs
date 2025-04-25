@@ -10,7 +10,9 @@ En la actualidad, la implementación de referencia de PHP es producida por The P
 
 PHP originalmente significaba Personal Home Page (Página personal), pero ahora significa el inicialismon recursivo PHP: Hypertext Preprocessor.
 
-## Instalaciones previas
+## Instalación en MacOs
+
+*Instalaciones previas*
 
 Instalar Homebrew, y si no está instalado ejecutar:
 
@@ -137,3 +139,34 @@ Para asegurarte de que todas las versiones de PHP han sido completamente elimina
     php -v
 
 Si los comandos anteriores no devuelven ninguna versión de PHP, la desinstalación ha sido exitosa.
+
+
+# Instalación de php en Windows
+
+Descargar la version de php requerida de: [Php Download](https://windows.php.net/download/)
+preferentemente en formato .zip
+
+Descomprimir en c:\php\php-8.1.32
+
+Configurar Variables de Entorno Abrir:
+    Propiedades del Sistema, Opciones Avanzadas, Variables de Entorno
+    En la sección Variables del sistema, buscar Path, edítar y agregar la ruta donde se descomprimio PHP:
+
+        Elegir Path, boton editar, Nuevo y pegar
+                
+                C:\php\php-8.1.32
+    
+        boton Aceptar
+
+Renombrar el Archivo de configuración php.ini-development y renombrar a php.ini
+
+    Editar el archivo y habilitar librerias como zona horaria, postgres, etc
+
+        date.timezone = America/La_Paz
+        extension=pdo_pgsql
+        extension=pgsql 
+ 
+Verificar:
+
+    php -v
+

@@ -34,7 +34,7 @@ sudo mv composer.phar /usr/local/bin/composer
 composer --version
 ```
 
-## Reinstalar o Actualizar Composer
+### Reinstalar o Actualizar Composer
 
 Crear un directorio de instalacion:
 
@@ -62,3 +62,20 @@ Verificar que Composer funcionar con un comando global:
 ```bash
 composer --version
 ```
+
+
+## Instalar Composer en Windows
+
+Descargar el instalador de: [composer](https://getcomposer.org/)
+Ir a Download y descargar Composer-Setup.exe
+
+Ejecutar y seguir los pasos de la instalacion:
+
+    check developer mode
+    C:\Composer
+    Chose the command-line php:  C:\php\php-8.1.32\php.exe
+
+Verificar
+
+    composer --version    
+
