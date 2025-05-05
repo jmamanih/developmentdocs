@@ -39,6 +39,10 @@ code .
     
     "terminal.integrated.fontFamily": "Hack Nerd Font"
 
+    ó
+
+    "terminal.integrated.fontFamily": "Cascadia Code NF"
+
 - Guardar, y se veran los cambios
 
 ## Extensiones por Default
@@ -86,10 +90,9 @@ File > Preferences > Color Theme > Install Color Themes, select theme
 - Python snippets
 
 - Python Debugger
-- Python Environment Manager
 
 - Jupyter Keymap
-- Jupiter Notebook Renders
+- Jupiter Notebook Renderers
 - Jupyter
 - Jupyter Cell Tags
 
