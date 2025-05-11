@@ -45,6 +45,12 @@ code .
 
 - Guardar, y se veran los cambios
 
+## Instalar Idioma Español y Alternar entre Idiomas
+
+* Instalar el paquete "Spanish Language Pack" o "Paquete de idioma español"
+* Presione "Ctrl+Mayús+P" o "Cmd+Shift+P" elegir "Configure Display Language", seleccionar el idioma deseado
+* Reiniciar VS Code
+
 ## Extensiones por Default
 - Material Theme Free
 - Material Them Icons
