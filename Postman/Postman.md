@@ -40,6 +40,35 @@ Guarde el archivo y ciérrelo.
 
 Si las rutas de archivo son correctas el icono deberia mostrarse en el menú del sistema.
 
+## WORKSPACE
+
+En Postman, un Workspace (espacio de trabajo) es un entorno colaborativo donde se puede organizar y gestionar tus colecciones de peticiones, entornos, scripts, y otros recursos relacionados con APIs. Piensa en un Workspace como un "proyecto" que contiene todo lo necesario para trabajar con una o varias APIs.
+
+Tipos de Workspaces:
+
+    Personal Workspace: Solo tú puedes ver y trabajar en él.
+    Team Workspace: Puedes colaborar con otros miembros de tu equipo.
+    Public Workspace: Puedes compartirlo públicamente para que otros lo vean y utilicen.
+
+Crear un Workspace en Postman
+
+Desde la aplicación de Postman (escritorio o web):
+
+    Abre Postman.
+    En la esquina superior izquierda, haz clic en el selector de Workspace (donde ves el nombre actual del Workspace).
+    Haz clic en "Create Workspace" o "Nuevo espacio de trabajo".
+    Llena la información:
+        Nombre del Workspace.
+        Descripción (opcional).
+        Tipo de Workspace (Personal, Team, Public).
+    Haz clic en "Create Workspace".
+
+¿Para qué usar Workspaces?
+
+    Separar proyectos o entornos de desarrollo.
+    Compartir colecciones con un equipo.
+    Organizar pruebas automatizadas y documentación de APIs.
+
 ## COLLECTIONS
 
 En Postman, una colección es un conjunto organizado de solicitudes HTTP (requests) que se pueden agrupar por proyecto, funcionalidad o flujo de trabajo. Es una forma práctica de estructurar y reutilizar pruebas o llamadas a APIs.
