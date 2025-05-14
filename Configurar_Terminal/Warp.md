@@ -44,7 +44,7 @@ Warp es una terminal moderna basada en Rust, diseñada para mejorar la experienc
     Cmd + V                      // Pegar     
     Cmd + Shift + P              // Buscar comando ejecutado
                                     Para elegir un Tema, escribir Theme -> Open Theme Picker y seleccionar el tema
-    Ctrl + 1                     // Ir a una pestaña especifica en este caso 1
+    Cmd + 1                      // Ir a una pestaña especifica en este caso 1
                                     Se usa 9 para ir a la ultima pestaña 
 
 ## Configurar los Shorcuts (Atajos de Teclado)

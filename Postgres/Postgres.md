@@ -174,7 +174,65 @@ SELECT “to” FROM table;
 \q
 ```
 
-# Desinstalar postgres
+## Esquemas en Postgres
+
+En PostgreSQL, una base de datos es un contenedor lógico que almacena todos los objetos relacionados, como tablas, vistas, funciones, índices, etc. 
+
+En PostgreSQL, los esquemas son espacios de nombres que permiten organizar y agrupar lógicamente los objetos de base de datos.
+
+Dentro de una base de datos, se pueden crear múltiples esquemas.
+
+¿Para qué se usan los esquemas?
+
+Los esquemas se utilizan para:
+
+    Organizar objetos dentro de una base de datos (por ejemplo, por módulo o área funcional).
+
+    Evitar conflictos de nombres entre objetos (pueden existir tablas con el mismo nombre en diferentes esquemas).
+
+    Controlar el acceso mediante permisos específicos por esquema.
+
+    Separar ambientes dentro de la misma base de datos (por ejemplo, pruebas vs producción).
+
+### Ejemplo práctico de uso de esquemas
+
+Crear una base de datos
+
+    CREATE DATABASE empresa_db;
+
+Conectarse a la base de datos
+
+    \c empresa_db
+
+Crear un esquema
+
+    CREATE SCHEMA rrhh;
+
+Crear una tabla dentro del esquema
+
+    CREATE TABLE rrhh.empleados (
+        id SERIAL PRIMARY KEY,
+        nombre TEXT NOT NULL,
+        puesto TEXT NOT NULL,
+        fecha_ingreso DATE
+    );
+
+Insertar datos en la tabla del esquema
+
+    Opción 1: Referenciar el esquema explícitamente
+
+        INSERT INTO rrhh.empleados (nombre, puesto, fecha_ingreso)
+        VALUES ('Ana López', 'Analista', '2022-03-15');
+
+    Opción 2: Cambiar el esquema por defecto usando SET search_path
+
+        SET search_path TO rrhh;
+
+        INSERT INTO empleados (nombre, puesto, fecha_ingreso)
+        VALUES ('Carlos Pérez', 'Gerente', '2021-11-01');
+
+
+## Desinstalar postgres
 
 ```sh
 brew uninstall postgres
@@ -218,3 +276,4 @@ brew list --formula | grep -e postgres -e psql
 sudo rm /etc/sysctl.confrm
     /etc/sysctl.conf: No such file or directory
 ```
+
