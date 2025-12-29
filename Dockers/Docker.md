@@ -149,6 +149,50 @@ Abrir DBEaver:
     \dt
 ```
 
+## Instalar Postgres en ARMx64
+
+1. Instalar la imagen de postgres ultima version estable
+
+```sh
+docker pull postgres:latest
+```
+
+Verificar 
+
+```sh
+docker images
+```
+
+2. Crear un directorio para el volumen de postgres
+
+```sh
+mkdir  ~/Docker_Volumes/postgres
+```
+
+3. Crear el contenedor para postgres
+
+Ejecutar el comando:
+
+```sh
+docker run --name postgres \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=postgres \
+  -v ~/Docker_Volumes/postgres:/var/lib/postgresql/data \
+  -p 5432:5432 \
+  -d postgres:latest
+```
+
+## Conectar un cliente SQL (DBeaver) a Postgres
+
+Crear una nueva conexión: Menu > Nueva conexion, PostgresSQL
+
+    General:
+        Server Host:  localhost
+        Database: (dejar en blanco para ver todas la dbs y elegir un nombre en caso de usar un db especifico) 
+        Port: 5432
+        Nombre de usuario: postgres
+        Contraseña: postgres
+
 ## Contenedor Postgres en Windows
 
 *Instalar Docker Desktop*
@@ -481,9 +525,143 @@ docker exec laravel php -v
 docker exec laravel php artisan list    
 ```
 
-## ------------------------------------------
+## Instalar SQL Server 2019 en aquitectura ARMx64 Macos
+
+Verificar si esta instalado docker
+
+```sh
+docker --version
+```
+
+1. Descargar la imagen oficial de SQL Server 2022
+
+```sh
+docker pull mcr.microsoft.com/mssql/server:2019-latest
+```
+
+Esto descarga la versión más reciente y estable de SQL Server 2022.
+
+2. Crear un volumen apuntando a una carpeta local (~/Docker_Volumes/sqlserver)
+
+Primero, crea una carpeta en tu sistema local para almacenar los backups:
+
+```sh
+mkdir -p ~/Docker_Volumes/sqlserver
+```
+
+Docker no puede usar directamente volúmenes con ruta absoluta en docker volume create, pero puedes hacer bind-mount directamente en el docker run:
+
+3. Crear el contenedor y montar la carpeta como volumen
+
+```sh
+docker run -d \
+  --platform linux/amd64 \
+  --name sqlserver \
+  -e "ACCEPT_EULA=Y" \
+  -e "MSSQL_SA_PASSWORD=Juanfer2687." \
+  -e "MSSQL_PID=Developer" \
+  -e "MSSQL_MEMORY_LIMIT_MB=2048" \
+  -p 1433:1433 \
+  -v ~/Docker_Volumes/sqlserver:/var/opt/mssql \
+  --cap-add SYS_PTRACE \
+  mcr.microsoft.com/mssql/server:2019-latest
+```
+
+
+4. Verificar que todo esté funcionando
+
+Verifica que el contenedor está en ejecución:
+
+```sh
+docker ps
+```
+
+Verifica que el volumen esté montado correctamente:
+
+```sh
+docker exec -it ls /var/opt/mssql
+```
+
+Se debe ver el contenido de ~/Docker_Volumes/sqlserver
+
+
+
+5. Conectar a Sql Server desde un cliente como AZURE DATA STUDIO
+
+Para eso debe ingresar los siguiwentes parámetros: ir a > Connections
+
+| Campo                | Valor                                     |
+| -------------------- | ----------------------------------------- |
+| **Connection type**  | `Microsoft SQL Server`                    |
+| **Input type**       | `Parameters`                              |
+| **Server**           | `localhost,1433`                          |
+| **Authentication**   | `SQL Login`                               |
+| **User name**        | `sa`                                      |
+| **Password**         | `Juanfer2687.`                            |
+| **Database**         | (dejar en blanco o usar `master`)         |
+| **Encrypt**          | `Mandatory`                               |
+| **Trust server cert**| **Truee** (muy importante en Linux o Mac) |
+| **Server group**     | (dejar en blanco o `Default`)             |
+| **Name**             | (dejar en blanco)                         |
+
+
+
+6. Sacar un backup de una base de datos dentro del contenedor
+
+Abrir una nueva consulta en Azure Data Studio
+
+Hacer clic en New Query (nueva consulta), y ejecutar:
+
+```sql
+BACKUP DATABASE [master] 
+TO DISK = N'/var/opt/mssql/backup/master_backup.bak' 
+WITH FORMAT, INIT, SKIP, COMPRESSION, STATS = 10;
+```
+**Nota:** reemplazar 'master' por la base de datos a respaldar, mantener los corchetes
+
+Verificar si se respaldo la base de datos correctamente
+
+```sh
+ls -lh ~/Docker_Volumes/sqlserver
+```
+
+Mostrará la base de datos respaldad en .bak dentre del directorio ~/Docker_Volumes
+
+Si no aparece nada después del backup?
+
+Asegúrarse de que el backup SQL no falló.
+
+Verifica que el contenedor esté en ejecución (docker ps).
+
+Asegúrate de estar mirando la carpeta correcta en el host (~/Docker_Volumes/sqlserver).
+
+Probar en el contnedor escribiendo un archivo de texto en esa ruta, y viendo si aparece en tu host:
+
+```bash
+docker exec -it sqlserver bash
+echo "prueba" > /var/opt/mssql/backup/archivo.txt
+```
+Luego, en tu host:
+
+```bash
+cat ~/Docker_Volumes/sqlserver/archivo.txt
+# → debería mostrar: prueba
+```
+
+7. Restaurar una base de datos
+
+Al igual que en el paso anterior ejecutar en Azure Data Studio:
+
+```sql
+RESTORE DATABASE [MiBaseDeDatosRestaurada]
+FROM DISK = N'/var/opt/mssql/backup/MiBaseDeDatos.bak'
+WITH MOVE 'MiBaseDeDatos' TO '/var/opt/mssql/data/MiBaseDeDatos.mdf',
+     MOVE 'MiBaseDeDatos_log' TO '/var/opt/mssql/data/MiBaseDeDatos_log.ldf',
+     REPLACE;
+```
+
 ## COMANDOS DOCKER
-## ------------------------------------------
+
 ```sh
 # Construye una imagen a partir de un Dockerfile en el directorio actual
 docker build

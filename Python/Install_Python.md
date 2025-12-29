@@ -5,356 +5,532 @@
 Python es un lenguaje de programación ampliamente utilizado en las aplicaciones web, el desarrollo de software, la ciencia de datos y el machine learning (ML). Los desarrolladores utilizan Python porque es eficiente y fácil de aprender, además de que se puede ejecutar en muchas plataformas diferentes. El software Python se puede descargar gratis, se integra bien a todos los tipos de sistemas y aumenta la velocidad del desarrollo.
 
 ## Instalar Python en MacOs
-Verificar la version de Python
 
-    python3 --version
+Verificar si está instalado Python y la versión
 
-## Gestionar versiones de python con pyenv
+```sh
+python3 --version
+```
+
+## Gestionar las versiones de python con pyenv
 
 Pyenv en es una herramienta que nos permite instalar diferentes versiones de Python y cambiar entre ellas según los requerimientos del proyecto con el cual necesitamos trabajar.
 
-Instalar pyenv para gestionar las versiones de Python
+### Instalar pyenv para gestionar las versiones de Python
 
-    brew install pyenv
+```sh
+brew install pyenv
+```
 
-Añadimos lo siguiente a .bashrc o .zshrc
+Verificar que Shell se está usando
 
-    # pyenv
-    export PATH="$HOME/.pyenv/bin:$PATH"
-    eval "$(pyenv init --path)"
-    eval "$(pyenv virtualenv-init -)"
+```sh
+echo $SHELL
+```
 
-Añadir pyenv al Path de Mac:
+Esto te devolverá una ruta como:
 
-    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+```sh
+/bin/zsh → estás usando Zsh
+# ó
+/bin/bash → estás usando Bash
+```
 
-Añadir Pyenv Init a tu terminal:
+### Configurar pyenv en el shell
 
-    echo 'eval "$(pyenv init --path)"' >> ~/.zprofile
-    echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+Agrega lo siguiente a tu archivo de configuración del shell. Si se usa:
 
-Reiniciar el shell
+- Zsh (por defecto en macOS): editar ~/.zshrc
+- Bash: edita ~/.bash_profile o ~/.bashrc
 
-    source ~/.zshrc
-    ó
-    reset
+```sh
+# Agrega estas líneas
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+```
 
-Verificar y validar la instalación
+Reiniciar el shell o la terminal 
 
-    pyenv --version 
-    pyenv -v
+```sh
+source ~/.zshrc
+# ó
+reset
+```
+
+Verificar y validar la instalación de pyenv
+
+```sh
+pyenv --version 
+pyenv -v
+```
     
 ## Instalar diferentes versiones de Python
 
-Ver un listado de todas las versiones de Python disponibles 
+Instalar versiones de Python
 
-    pyenv install --list
+### Instalar versiones especificas
 
-Instalar la versión 3.6.0
+```sh
+pyenv install 3.10.14
+pyenv install 3.12.3
+``` 
 
-    pyenv install -v 3.6.0
+Verificar que estén disponibles:
 
-Iinstalar Python versión 3.10.2
+```sh
+pyenv versions
+```
 
-    pyenv install -v 3.10.2 
+### Instalar la última versión estable de Python
+
+Ver un listado de todas las versiones disponibles de Python
+
+```sh
+pyenv install --list
+```
+
+Buscar la última versión estable (sin "dev", "rc", ni "a/b", etc).
+
+Por ejemplo, si se ve:
+
+```sh
+  ...
+  3.12.3
+  3.13.0rc1
+```
+
+Entonces 3.12.3 es la version más reciente estable.
+
+Instalar la última versión estable
+
+```sh
+pyenv install 3.12.3
+```
+
+**Nota:** Si al instalar sale el mensaje:  WARNING: The Python lzma extension was not compiled. Missing the lzma lib?, se debe instalar:
+
+```sh
+brew install xz
+```
 
 Ver las versiones instaladas de python
 
-     pyenv versions
+```sh
+pyenv versions
+```
 
-Establecer una versión de Python por defecto de manera global (Bash o ZSH)
+### Establecer la versión de Python
 
-    pyenv global 3.10.2
+👉 A nivel global (para todo el sistema):
 
-Verificar la versión global de Python
+```sh
+pyenv global 3.12.3
+```
 
-    pyenv versions
+Ver la version global
 
-Reiniciar la terminal
+```sh
+pyenv global
+python3 --version
+```
 
-    reset
-    source ~/.zshrc
+👉 A nivel local (por proyecto):
 
-Para comprobar la versión global ejecutamos el interprete de Python
+En la carpeta de tu proyecto:
 
-    python3
-    ctrl+Z
+```sh
+cd /Code/Python/proyecto
+pyenv local 3.10.14
+```
 
-## Versiones locales de python
+Esto creará un archivo .python-version en esa carpeta.
 
-Pyenv es mucho más flexible y nos permite especificar una versión local para un directorio en específico.
+Ver la version local de python
 
-Crear un proyecto local con python 3.10.2
+```sh
+pyenv local
+```
 
-    cd ~/CODE/python
-    mkdir -p APISearchText
-    cd APISearchText
-    pyenv local 3.10.2 
+Verificar la ruta del Python activo:
 
-Este último comando establece la versión 3.10.2 como la predeterminada en este directorio y todos sus hijos. 
-Si listamos el directorio con el comando ls -la podemos ver el archivo .python-version el cual contiene la versión de Python especificada como local.
+```sh
+which python
+```
 
-Ver las versiones de python
+Verificar paquetes instalados:
 
-    pyenv versions
+```sh
+pip list
+```
 
+## Administración de paquetes con pip
 
-## Instalación de pip
+### Instalación de pip
 
 Verificar si esta instalado pip
 
-    python3 -m pip --version
-    pip3 --version
+```sh
+pip --version
+pip3 --version
+```
 
-En caso de no estar instalado PIP ejecutar el siguiente comando
+Instalar pip
 
-    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+Al instalar python con "brew install python" se instala python y pip
 
-Actualizar la version de pip
+En caso de no estar instalado pip ejecutar el siguiente comando
 
-    python3 -m pip install --upgrade pip
+```sh
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+```
 
-## Entornos Virtuales para Desarrollo en Python con virtualenv
+Verificar la instalación de pip
+
+```sh
+pip --version
+which pip
+```
+
+### Actualizar pip en un entorno virtual (venv o virtualenv)
+
+Activa tu entorno virtual:
+
+```sh
+source venv/bin/activate
+```
+
+Y luego:
+
+```sh
+pip install --upgrade pip 
+```
+ó
+```sh
+python -m pip install --upgrade pip
+```
+
+### Ver paquetes del entorno virtual
+
+Hacer un listado total
+
+```sh
+pip list
+```
+Buscar un paquete especifico instalado 
+
+```sh
+pip list | grep -i pandas
+```
+
+### Instalar paquetes en el entorno virtual segun lo requerido por el proyecto
+
+Ejemplo
+
+```sh
+pip install fastapi
+pip install schedule
+```
+
+### Exportar paquetes instalados en el entorno virtual
+
+```sh
+pip freeze > requirements.txt  
+```
+
+### Instalar paquetes exportados en entorno virtual
+
+```sh
+pip install -r requirements.txt
+```
+
+## Crear entornos virtuales por proyecto con pyenv y virtualenv
+
+Virtualenv permite crear entornos virtuales de Python aislados, donde se puede instalar paquetes sin afectar el sistema.
+
+### Instalar virtualenv
+
+Asegurarse de que esté instalado pip
+
+```sh
+pip --version
+```
+
+Instalar virtualenv
+
+```sh
+pip install virtualenv
+```
 
 Actualizar pip
 
-    pip install --upgrade pip 
-
-Verificar librerias instaladas de manera global
-
-    pip list
-
-Si en la lista no aparece *virtualenv*, instalar
-
-    pip install virtualenv  
-
-Crear un entorno Virtual de Python
-
-    cd project_folder
-    virtualenv nombre_de_tu_entorno -p python3
-    virtualenv venv -p python3
-    virtualenv venv
-
-Cambiar version de python del entorno virtual
-
-    cd project_folder
-    virtualenv -p python3.12 venv
-   
-Activar entorno virtual
-
-    source ./venv/bin/activate 
-
-Ver con que version de python se esta trabajando
-
-    cd project_folder
-    source ./venv/bin/activate
-    python --version
-
-Ver paquetes del entorno virtual
-
-    pip list
-
-Instalar paquetes en el entorno virtual segun lo requerido por el proyecto
-
-    pip install fastapi
-    pip install schedule
-    ...
-
-Exportar paquetes instalados en el entorno virtual
-
-    pip freeze > requirements.txt  
-
-Instalar paquetes exportados en entorno virtual
-
-    pip install -r requirements.txt
-    
-Desactivar entorno virtual
-
-    deactivate
-
-Comando para mostrar el entorno virtual activo
-
-    echo $VIRTUAL_ENV 
-
-Ejecutar una app en python desde el entorno virtual
-
-    env/bin/python main.py
-
-Desde la terminal VS Code puede ejecutar 
-
-    python main.py
-
-Eliminar el virtual environment
-
-Si ya no se necesita el virtualenv, se puede eliminar simplemente borrando la carpeta del proyecto
-
-    deactivate
-    rm -rf venv
-
-## Crear un entorno virtual desde la terminal de Visual Studio Code
-
-    # 1. Crear entorno virtual (si no existe)
-    python -m venv venv
-
-    # 2. Activar el entorno virtual
-    # En Windows:
-    # venv\Scripts\activate
-    # En macOS/Linux:
-    source venv/bin/activate
-
-    # 3. Actualizar pip
-    pip install --upgrade pip
-
-    # 4. Instalar librerias por ejemplo: numpy 
-    pip install numpy
-
-    # 5. Ejecutar aplicación
-    python main.py
-
-## Ejecutar un programa Python en un entorno virtual con Visual Studio Code
-
-    Cmd + Shift + P 
-    Escribir "Python: Create Environment" y seleccionar la opción que aparece
-    Seleccionar "Venv: Creates a '. venv' 
-    Seleccionar la versión de Python a utilizar en el entorno virtual
-    VS Code creará el entorno virtual y lo configurará automáticamente para el proyecto
-
-## Elegir un entorno virtual con Visual Studio Code
-
-    Cmd + P
-        > Python Select Interpreter
-            Select de workspace folder to set the interpreter (seleccionar la carpeta del proyecto)
-                Seleccionar interprete ( elegir python del area de trabajo)
-
-## Abrir Terminal Integrado al entorno virtual en Visual Studio Code
-
-    Cmd + P
-        > Terminal: Create New Terminal starting in a Custom Working Directory (seleccionar)
-
-**NOTA:** Para trabajar con entornos virtuales activar entorno virtual en el entorno VS Code y en su terminal
-
-## Compilar proyectos python desde Visual Studio Code
-
-    Abrir Visual Studio Code
-    Cmd + Shift + P
-    Python: Seleccionar Interprete
-    -> Elegir la version de python
-    ó
-    -> Seleccionar en el nivel de área de trabajo
-
-    python --version
-
-## Mostrar estado de virtualenv en el prompt de zsh
-
-Editar el archivo de configuración .zshrc
-
-    nvim ~/.zshrc
-
-Editar las las siguientes lineas
-
-    plugins=(virtualenv)
-    POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time root_indicator background_jobs time virtualenv) 
-
-Cerrar y volver a abrir terminal
-
-    source ~/.zshrc
-
-## Instalar Jupyter Notebook (opcional)
-
-Instalar Jupiter Notebook
-
 ```sh
-pip3 install notebook
+pip install --upgrade pip
 ```
 
-*Abrir aplicacion Jupyter Notebook*
+### Crear un entorno virtual
+
+Ver versiones disponibles de python
+
+```sh
+pyenv versions
+```
+
+Asegúrate de tener instalada la versión de python deseada
+
+Por ejemplo:
+
+```sh
+pyenv install 3.12.10
+```
+
+Crear el entorno virtual con una determinada versión con pyenv
+
+```sh
+pyenv shell 3.12.10
+python -m venv venvir
+```
+
+*Nota:* El comando "pyenv shell 3.12.10" establece la versión de Python 3.12.10 como la versión activa de Python para la sesión actual de terminal. Esto significa que cualquier comando python que ejecutes en esta terminal usará la versión 3.12.10 (si está instalada), sin afectar otras terminales o la configuración global de pyenv.
+
+Crear un entorno virtual con la version por defecto de python o la versión global
+
+```sh
+python -m venv venv-dev
+```
+
+Crear entorno virtual con virtualenv con una version especifica python 
+
+```sh
+pyenv versions
+virtualenv -p ~/.pyenv/versions/3.12.10/bin/python venv-dev
+```
+
+Tambien se puede crear un entorno virtual con la version global de python
+
+```sh
+virtualenv venv-dev
+```
+
+*Nota:* Igual usará el python de la versión global de pyenv.
+
+*Nota:* Antes de crear entornos virtuales en Apple Silicon (ARM64) instalar lo siguiente:
+Instalar herramientas de desarrollo
+
+```sh
+xcode-select --install
+```
+
+### Activar entorno virtual
+
+Activar el entorno virtual
+
+Asumiendo que el entorno se llama venv-dev y está en el directorio actual:
+
+```sh
+source venv-dev/bin/activate
+python --version
+```
+
+### Desactivar entorno virtual
+
+Desactivar un entorno virtual
+
+```sh
+deactivate
+```
+
+### Eliminar entorno virtual
+
+Eliminar la carpeta del entorno virtual
+
+```sh
+deactivate
+rm -rf venv
+```
+
+## Limpiar entornos virtuales
+
+Limpiar el cache de entornos virtuales
+
+```sh
+unset VIRTUAL_ENV
+hash -r
+```
+
+### Ver el entorno virtual activo
+
+```sh
+echo $VIRTUAL_ENV
+```
+
+## Mostrar el nombre del entorno virtual en el prompt de zsh (powerlevel10k)
+
+Editar el archivo de configuración .p10k.zsh
+
+```sh
+nano ~/.p10k.zsh
+# ó
+code ~/.p10k.zsh
+```
+
+Editar las siguientes lineas
+
+```sh
+  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
+  typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND='046'  # Verde brillante
+  typeset -g POWERLEVEL9K_VIRTUALENV_BACKGROUND='234'  # Gris oscuro
+  typeset -g POWERLEVEL9K_VIRTUALENV_PREFIX='🐍 '
+  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYENV=true
+  typeset -g POWERLEVEL9K_VIRTUALENV_GENERIC_NAMES=(virtualenv venv .venv)
+  
+  function prompt_my_virtualenv() {
+    if [[ -n $VIRTUAL_ENV ]]; then
+      local venv_name=$(basename "$VIRTUAL_ENV")
+      p10k segment -f 2 -b 0 -t "🐍 $venv_name"
+    fi
+  }
+
+  # The list of segments shown on the left. Fill it with the most important segments.
+  typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+    # =========================[ Line #1 ]=========================
+    os_icon                 # os identifier
+    dir                     # current directory
+    my_virtualenv           # nuestro segmento personalizado
+    virtualenv              # python virtual environment
+    vcs                     # git status
+    # =========================[ Line #2 ]=========================
+    newline                 # \n
+    prompt_char             # prompt symbol
+  )
+```    
+
+Cerrar y volver a abrir terminal ó ejecutar los siguientes comandos
+
+```sh
+source ~/.p10k.zsh
+source ~/.zshrc
+reset
+```
+
+## Cuando usar python, pip y python3, pip3
+
+Usa python3 y pip3 si:
+
+* Estás trabajando con el Python 3 del sistema o de Homebrew.
+* No tienes pyenv y quieres asegurarte de que estás ejecutando Python 3.
+
+Ejemplo:
+
+```sh
+python3 -m venv venv
+source venv/bin/activate
+pip3 install numpy
+```
+
+Usa python y pip si:
+
+* Estás en un entorno virtual (venv, virtualenv, Conda): ahí python y pip ya están correctamente redirigidos.
+
+Resumen de uso de python, python3
+
+| Comando |	Uso típico |
+|---------|-------------------------------------------------------------|
+| python  | Puede ser Python 2 o 3 (depende del sistema/configuración)  |
+| python3 | Asegura que usas Python 3                                   |
+| pip	  | Instala paquetes para python                                |
+| pip3	  | Instala paquetes para python3                               |
+
+
+## Ejecutar una aplicación Python de forma normal
+
+```sh
+python nombre_de_archivo.py
+```
+```sh
+python main.py
+```
+Esto ejecuta el código una sola vez.
+
+### Ejecutar una app Python con autoreload
+
+Para autorecarga al guardar cambios, se tiene las siguientes opciones:
+
+**⚙️ Opción A: Usar watchdog (universal y flexible)**
+
+Instalar:
+```sh
+pip install watchdog
+```
+Ejecutar con:
+```sh
+watchmedo auto-restart --directory=. --pattern="*.py" --recursive -- python main.py
+```
+Esto observará todos los .py en el directorio y subdirectorios, y reiniciará la app cuando detecte cambios.
+
+**⚙️ Opción B: Usar flask o fastapi con modo desarrollo (si es una app web)**
+
+Flask:
+```sh
+export FLASK_APP=app.py
+export FLASK_ENV=development
+flask run
+```
+Esto activa el modo debug, que incluye auto-reload.
+
+FastAPI (usando uvicorn):
+```sh
+pip install uvicorn
+uvicorn app:app --reload
+```
+La opción --reload hace exactamente eso: reinicia la app al detectar cambios en los archivos.
+
+
+## Instalar Jupyter Notebook y Jupyter Lab
+
+### ✅ 1. Instalar Jupyter
+
+🔸 Instalar dentro de un entorno virtual (recomendado)
+
+Crea y activa un entorno virtual:
+
+```sh
+python -m venv venv
+source venv/bin/activate  # en Mac/Linux
+```
+
+Instala jupyter y jupyterlab:
+
+```sh
+pip install jupyterlab notebook ipykernel
+```
+
+### 🚀 2. Ejecutar Jupyter Notebook
 
 ```sh
 jupyter notebook
 ```
+Esto abrirá automáticamente el navegador web en http://localhost:8888, con una interfaz clásica para crear y editar notebooks .ipynb.
 
-## Instalar Jupyter Lab (opcional)
-
-Para Instalar Jupiter Lab se debe primero instalar PIP
-
-```sh
-pip install jupyterlab
-```
-
-*Ejecutar Jupyter Lab*
+### 🚀 3. Ejecutar JupyterLab
 
 ```sh
 jupyter lab
 ```
+Esto abrirá la nueva interfaz moderna y más potente de Jupyter en el navegador (también en http://localhost:8888 por defecto, pero con otra interfaz).
 
-## Desinstalar Jupyter en MacOs
+### 🛑 4. Detener Jupyter
 
-Desinstala Jupyter utilizando pip: Ejecuta los siguientes comandos para desinstalar Jupyter y sus componentes:
+Presiona Ctrl + C en la terminal donde se ejecuta. Confirmar con y si.
 
-    pip uninstall jupyter
-    pip uninstall jupyterlab
-    pip uninstall notebook
-    pip uninstall nbconvert
-    pip uninstall nbformat
-    pip uninstall jupyter-console
-    pip uninstall ipykernel
-    pip uninstall ipywidgets
+### 🔍 Verifica instalación
+Para comprobar qué versión tienes instalada:
 
-Verifica que todo se ha desinstalado: Puedes verificar si Jupyter ha sido completamente desinstalado ejecutando:
-
-    jupyter --version
-
-Si muestra un error indicando que jupyter no está instalado, entonces la desinstalación fue exitosa.
-
-* Limpiar Archivos Residuos
-
-Para asegurarte de que no quedan archivos residuales, puedes eliminar las configuraciones y cachés de Jupyter:
-
-Eliminar configuraciones y caché:
-
-    rm -rf ~/.jupyter
-    rm -rf ~/Library/Jupyter
-
-Eliminar kernels y extensiones (si tienes configuraciones personalizadas):
-
-    rm -rf ~/Library/Application\ Support/jupyter
+```sh
+jupyter --version
+```
+*Nota:* Se recomienda usar extensiones de jupyter en visual studio para una mayor performance 
 
 
-* (Opcional) Desinstalar Anaconda o Miniconda
-
-Si instalaste Jupyter a través de Anaconda o Miniconda y deseas eliminar todo el entorno, sigue estos pasos:
-
-Desinstala Anaconda/Miniconda:
-
-    rm -rf ~/anaconda3
-    rm -rf ~/miniconda3
-
-Eliminar referencias de Anaconda/Miniconda de tu shell: Edita tu archivo de configuración de shell (~/.bash_profile, ~/.zshrc, etc.) y elimina las líneas relacionadas con Anaconda o Miniconda.
-
-Eliminar caché y archivos residuales de Anaconda:
-
-    rm -rf ~/.conda
-    rm -rf ~/.continuum
-
-
-Estos pasos eliminarán Jupyter, Jupyter Notebook y todos los archivos asociados de tu macOS. Si necesitas ayuda adicional, no dudes en preguntar.
-
-
-## IDE spyder para python
-
-*Instalar Spyder IDE para python*
-
-https://www.spyder-ide.org/
-
-
-adicionar terminal al IDE Spyder
-
-    pip install spyder-terminal
-
-
-
-
-
-  
 

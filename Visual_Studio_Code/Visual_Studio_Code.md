@@ -7,6 +7,8 @@
 
 ## Opening Visual Studio Code from Command Line
 
+Opcion 1. Configurando los archivos bash o zsh
+
 ```sh
 touch ~/.bash_profile
 open ~/.bash_profile 
@@ -29,12 +31,22 @@ Testing
 code .
 ```
 
+Opcion 2. Alternativamente hay otra forma de configurar el PATH de VSCode desde Visual Studio Code
+
+    - Abrir VSCode
+    - Cmd+Shift+P
+    - Elegir: Shell Command: Install 'code' command in Path
+    - Probar desde la terminal ejecutar
+
+        code --version
+        code .
+
 
 ## Configurar Font para la terminal con ZSH
 
 - Descargar Font: https://www.nerdfonts.com/ (Descargar, Elegir Hack Nerd Font)
 - Descomprimir font, instalar todas las fuentes (doble clic sobre el archivo font)
-- Abrir VS Code, F1, escribir json (configuración de usuario settings.json)
+- Abrir VS Code, F1, escribir json (configuración de usuario settings.json) ó (Preferences Open User Settings)
 - Antes de la ultima llave adicionar:  (anteceder al final de la penultima linea con una coma)
     
     "terminal.integrated.fontFamily": "Hack Nerd Font"
@@ -52,7 +64,7 @@ code .
 * Reiniciar VS Code
 
 ## Extensiones por Default
-- Material Theme Free
+- Material Theme Free (Vira Theme)
 - Material Them Icons
 - Markdown Editor
 - Markdown Preview
@@ -67,6 +79,23 @@ code .
 - TODO Highlight
 - Terminal
 
+## Configuraciones de Visual Studio Code
+
+Abrir Settings > Cmd + ,
+ó Ir al Menú Code > Preferences > Settings
+
+En Search Settings buscar:
+
+    Curso Blinking                      # Cambiar el aspecto del cursor
+    Linking Editing (cheked)            # Autocompletar tags de apertura y cierre en html
+    Braked Pair Colorization (checked)  # Asigna colores a los niveles de llaves {}
+    Breadcrumbs (unchecked)             # Desactivar las guias de miga de pan
+    sticky scroll (cheched)             # Activa la ubicación de la funcion donde se encuentra
+    cursor animation (checked)          # Acompaña la ubicacion del cursor                     
+        Cursor Smooth Caret Animation: on
+        Cursor Blinking: blink          
+    
+
 ## Select Icon Themes
 
 File > Preferences > Icon Theme > Install Icon Themes, select icons
@@ -80,6 +109,15 @@ File > Preferences > Color Theme > Install Color Themes, select theme
 ```
     Cmd +               Zoom In
     Cmd -               Zoom Out
+```
+## Atajos de teclas
+
+```
+    Ctrl + Tab              # Cambiar entre pestañas
+    Cmd + `                 # Cambiar entre ventanas
+    Cmd + J                 # Abrir terminal
+    Cmd + S                 # Guardar proyecto
+    
 ```
 ## Compartir Extensión con todos los Perfiles
 
@@ -148,41 +186,15 @@ Para trabajar con archivos y terminal
 
     - Cline (prev. Claude Dev) – #1 on OpenRouter
 
+
+
 ## Crear Perfil para Spring Boot Developer Java
 
 
 https://www.youtube.com/watch?v=cQfBenvXkRw
 
 
-## Crear un entorno virtual de Python desde la terminal de Visual Studio Code
-
-    # 1. Crear entorno virtual (si no existe)
-    python -m venv venv
-
-    # 2. Activar el entorno virtual
-    # En Windows:
-    # venv\Scripts\activate
-    # En macOS/Linux:
-    source venv/bin/activate
-
-    # 3. Actualizar pip
-    pip install --upgrade pip
-
-    # 4. Instalar librerias por ejemplo: numpy 
-    pip install numpy
-
-    # 5. Ejecutar aplicación
-    python main.py
-
-## Ejecutar un programa Python en un entorno virtual con Visual Studio Code
-
-    Cmd + Shift + P 
-    Escribir "Python: Create Environment" y seleccionar la opción que aparece
-    Seleccionar "Venv: Creates a '. venv' 
-    Seleccionar la versión de Python a utilizar en el entorno virtual
-    VS Code creará el entorno virtual y lo configurará automáticamente para el proyecto
-
-## Elegir un entorno virtual con Visual Studio Code
+## Elegir un entorno virtual en python con Visual Studio Code
 
     Cmd + P
         > Python Select Interpreter
