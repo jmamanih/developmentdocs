@@ -109,6 +109,9 @@ File > Preferences > Color Theme > Install Color Themes, select theme
 ```
     Cmd +               Zoom In
     Cmd -               Zoom Out
+
+
+    
 ```
 ## Atajos de teclas
 
